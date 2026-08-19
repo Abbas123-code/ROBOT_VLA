@@ -1,0 +1,43 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# --- ROS 2 build artifacts ---
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+
+# --- Data & model weights (large / regenerable) ---
+data/datasets/*
+data/checkpoints/*
+!data/datasets/.gitkeep
+!data/checkpoints/.gitkeep
+*.usd
+*.usda
+*.usdc
+*.ckpt
+*.pt
+*.pth
+*.onnx
+
+# --- Isaac Sim / logs ---
+*.log
+isaac/assets/*
+!isaac/assets/.gitkeep
+
+# --- Editor / OS ---
+.vscode/
+.idea/
+.DS_Store
+
+# --- LaTeX build artifacts (docs/) ---
+*.aux
+*.fdb_latexmk
+*.fls
+*.toc
+*.out
