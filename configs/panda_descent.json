@@ -1,0 +1,16 @@
+{
+  "description": "Simulation-only descent to 3 cm above the upright cube top; fingers remain open, no grasp",
+  "base_world_xyz": [-0.09919888526198989, -0.0000007232520147226751, 0.00002693384885787964],
+  "base_quaternion_wxyz": [1.0, 0.0, 0.0, 0.0],
+  "cube_world_xyz": [0.49999988079071045, -0.00000017852551081877214, 0.02500000223517418],
+  "target_world_xyz": [0.49999988079071045, -0.00000017852551081877214, 0.08000000223517417],
+  "start_arm_radians": [0.0002, 0.39, 0.0001, -2.0344, 0.0, 2.4173, 0.7854],
+  "target_arm_radians": [-0.00010012470106691469, 0.5231765891702163, 0.0001, -2.029679696352624, -0.00008997383896847835, 2.552856281489548, 0.7854594884606954],
+  "finger_positions_metres": [0.04, 0.04],
+  "duration_seconds": 10.0,
+  "settle_seconds": 2.0,
+  "max_joint_tracking_error_rad": 0.04,
+  "max_final_position_error_metres": 0.008,
+  "minimum_grasp_world_z_metres": 0.070,
+  "maximum_grasp_lateral_offset_metres": 0.008
+}

@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/WongKinYiu/yolov9.git",
+  "revision": "5b1ea9a8b3f0ffe4fe0e203ec6232d788bb3fcff",
+  "weights_url": "https://github.com/WongKinYiu/yolov9/releases/download/v0.1/yolov9-s-converted.pt",
+  "weights_sha256": "09bf9ca4adef37944f4406455b5b81b451c1e67307916e4702da68cda4d3e46d",
+  "repository_license": "GPL-3.0",
+  "device": "cpu",
+  "confidence_threshold": 0.5,
+  "iou_threshold": 0.45,
+  "image_size": 640,
+  "tile_size": 320,
+  "tile_overlap": 0.5
+}

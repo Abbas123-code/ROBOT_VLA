@@ -1,0 +1,16 @@
+{
+  "description": "Simulation-only deeper descent, approximately 5 cm from the previous hold; open fingers beside cube, no closure or lift",
+  "base_world_xyz": [-0.09919888526198989, -0.0000007232520147226751, 0.00002693384885787964],
+  "base_quaternion_wxyz": [1.0, 0.0, 0.0, 0.0],
+  "cube_world_xyz": [0.49999988079071045, -0.00000017852551081877214, 0.02500000223517418],
+  "target_world_xyz": [0.49999988079071045, -0.00000017852551081877214, 0.03000000223517418],
+  "start_arm_radians": [0.0001, 0.5283, 0.0001, -2.031, -0.0001, 2.5527, 0.7855],
+  "target_arm_radians": [-0.00010444936969574028, 0.6344829882310178, 0.0001, -2.0039364326175164, -0.00012292646526497329, 2.6384194152712297, 0.7854819424277798],
+  "finger_positions_metres": [0.04, 0.04],
+  "duration_seconds": 10.0,
+  "settle_seconds": 2.0,
+  "max_joint_tracking_error_rad": 0.025,
+  "max_final_position_error_metres": 0.006,
+  "minimum_grasp_world_z_metres": 0.020,
+  "maximum_grasp_lateral_offset_metres": 0.006
+}

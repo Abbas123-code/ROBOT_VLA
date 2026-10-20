@@ -1,0 +1,76 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Enabled: true
+  Name: root
+  Value: true
+  Global Options:
+    Background Color: 35; 38; 45
+    Fixed Frame: world
+    Frame Rate: 20
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Ground grid
+      Enabled: true
+      Cell Size: 0.1
+      Plane Cell Count: 20
+      Reference Frame: world
+    - Class: rviz_default_plugins/TF
+      Name: Wrist camera frames
+      Enabled: true
+      Show Axes: true
+      Show Names: true
+      Marker Scale: 0.2
+    - Class: rviz_default_plugins/Image
+      Name: Wrist RGB
+      Enabled: true
+      Value: true
+      Topic:
+        Value: /wrist_camera/color/image_raw
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 2
+      Transport Hint: raw
+      Normalize Range: true
+    - Class: rviz_default_plugins/Image
+      Name: Wrist depth (metres)
+      Enabled: true
+      Value: true
+      Topic:
+        Value: /wrist_camera/depth/image_raw
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 2
+      Transport Hint: raw
+      Normalize Range: true
+      Min Value: 0.02
+      Max Value: 2
+      Median window: 5
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 1.8
+      Pitch: 0.6
+      Yaw: 0.8
+      Focal Point:
+        X: 0.4
+        Y: 0
+        Z: 0.4
+Window Geometry:
+  QMainWindow State: 000000ff00000000fd00000002000000000000011800000384fc0200000002fb000000100044006900730070006c0061007900730100000000000001bf000000ce00fffffffb0000000a0056006900650077007301000001c5000001bf000000ce00ffffff000000010000028000000384fc0200000002fb000000120057007200690073007400200052004700420100000000000001bf0000018200fffffffb000000280057007200690073007400200064006500700074006800200028006d00650074007200650073002901000001c5000001bf0000018200ffffff000001d40000038400000004000000040000000800000008fc00000000
+  Wrist RGB:
+    collapsed: false
+  Wrist depth (metres):
+    collapsed: false
+  Hide Left Dock: false
+  Hide Right Dock: false
+  Width: 1400
+  Height: 900
+  X: 50
+  Y: 50

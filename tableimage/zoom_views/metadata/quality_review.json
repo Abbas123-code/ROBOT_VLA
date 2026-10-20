@@ -1,0 +1,20 @@
+{
+  "review": "Contact-sheet visual inspection after capture; not a label audit",
+  "captured_images": 75,
+  "recommended_for_manual_annotation": 72,
+  "exclude_from_training": [
+    {
+      "file": "zoom_box_a140_far.png",
+      "reason": "Camera view intersects or is heavily blocked by the robot; intended box is obscured."
+    },
+    {
+      "file": "zoom_table_a180_wide.png",
+      "reason": "Camera intersects robot geometry; most of the image is black or occluded."
+    },
+    {
+      "file": "zoom_table_a180_wider.png",
+      "reason": "Robot heavily blocks the table."
+    }
+  ],
+  "note": "Original captures retained for traceability. Skip excluded files when importing into the annotation tool. Review partially visible objects and image-edge truncation in all remaining views."
+}

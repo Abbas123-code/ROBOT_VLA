@@ -1,0 +1,12 @@
+# Allowlist: never send host virtualenvs, datasets, secrets or GPU assets to Docker.
+**
+!Dockerfile
+!configs/
+!configs/requirements-yolov9-cpu.txt
+!configs/yolov9_official.json
+!src/
+!src/perception/
+!src/perception/*.py
+!scripts/
+!scripts/portable_vision.py
+!scripts/fetch_official_yolov9.py

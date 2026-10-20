@@ -1,0 +1,19 @@
+{
+  "repository": "https://github.com/bulletphysics/bullet3.git",
+  "commit": "d3afe76132fc76b0f9b2359cbaef47a3766e7fbb",
+  "checkout": "isaac/assets/bullet3",
+  "robot": {
+    "path": "examples/pybullet/gym/pybullet_data/franka_panda/panda.urdf",
+    "license": "Apache-2.0",
+    "license_file": "examples/pybullet/gym/pybullet_data/franka_panda/LICENSE.txt"
+  },
+  "environment": {
+    "path": "examples/pybullet/gym/pybullet_data/table/table.urdf",
+    "license": "Zlib",
+    "license_file": "LICENSE.txt",
+    "description": "Imported PyBullet table, with a locally generated floor, light, and dynamic cube; not a full warehouse."
+  },
+  "ros_domain_id": 42,
+  "namespace": "/vla_sim",
+  "units": "metres and radians"
+}

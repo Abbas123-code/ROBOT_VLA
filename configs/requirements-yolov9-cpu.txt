@@ -1,0 +1,16 @@
+# Use ONLY in env_yolov9_cpu. Install CPU wheels separately from
+# https://download.pytorch.org/whl/cpu: torch==2.5.1+cpu torchvision==0.20.1+cpu
+# Inference-only subset for the pinned WongKinYiu/yolov9 checkout.
+numpy==1.26.4
+scipy==1.17.0
+opencv-python-headless==4.10.0.84
+pandas==2.3.3
+seaborn==0.13.2
+matplotlib==3.10.8
+tqdm==4.67.1
+ipython==9.6.0
+GitPython==3.1.45
+PyYAML==6.0.3
+requests==2.32.5
+psutil==7.2.2
+setuptools==80.9.0

@@ -1,0 +1,24 @@
+name: robot-vla-tools
+services:
+  vision:
+    image: robot-vla-vision:cpu
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # CPU wheel versions tested on Linux x86_64; no GPU devices requested.
+    platform: linux/amd64
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    network_mode: none
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,size=256m
+    volumes:
+      - type: bind
+        source: ./tableimage
+        target: /input
+        read_only: true
+      - type: bind
+        source: ./outputs
+        target: /output

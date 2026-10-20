@@ -5,6 +5,9 @@ __pycache__/
 .venv/
 venv/
 env/
+env_isaacsim/
+env_yolov9_cpu/
+third_party/yolov9/
 .ipynb_checkpoints/
 
 # --- ROS 2 build artifacts ---
@@ -41,3 +44,25 @@ isaac/assets/*
 *.fls
 *.toc
 *.out
+
+# --- Local secrets, exports and temporary files ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.synctex.gz
+ros2_ws/.*.lock
+outputs/
+transfer/
+
+# Keep dataset guides/review metadata in Git; transfer images/labels separately.
+tableimage/**
+!tableimage/**/
+!tableimage/**/README.md
+!tableimage/**/metadata/
+!tableimage/**/metadata/manifest.json
+!tableimage/**/metadata/quality_review.json
+IMAGES/
+/Pasted image.png
+/old realtime.py

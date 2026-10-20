@@ -1,0 +1,14 @@
+{
+  "description": "Simulation-only hover; base pose from user runtime report, no grasp",
+  "base_world_xyz": [-0.09919888526198989, -0.0000007232520147226751, 0.00002693384885787964],
+  "base_quaternion_wxyz": [1.0, 0.0, 0.0, 0.0],
+  "cube_world_xyz": [0.49999988079071045, -0.00000017852551081877214, 0.02500000223517418],
+  "target_world_xyz": [0.49999988079071045, -0.00000017852551081877214, 0.15000000223517418],
+  "start_arm_radians": [0.1207, -0.7821, 0.0002, -2.3576, 0.0, 1.5707, 0.7854],
+  "target_arm_radians": [0.000001, 0.384533, 0.0, -2.032969, 0.0, 2.417502, 0.785399],
+  "finger_positions_metres": [0.04, 0.04],
+  "duration_seconds": 12.0,
+  "settle_seconds": 2.0,
+  "max_joint_tracking_error_rad": 0.10,
+  "max_final_position_error_metres": 0.015
+}

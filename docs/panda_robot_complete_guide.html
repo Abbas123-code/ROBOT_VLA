@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Complete local operating guide and verified experiment record for the ROBOT_VLA Panda tabletop simulation in Isaac Sim and ROS 2 Jazzy.">
+<title>ROBOT_VLA · Complete Panda Robot Guide</title>
+<style>
+:root{color-scheme:light;--bg:#f3f6fa;--paper:#fff;--ink:#17283b;--muted:#526479;--line:#dce4ed;--blue:#145bb8;--nav:#102436;--green:#146248;--amber:#845100;--red:#a22936;--code:#101f30}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:var(--blue);text-underline-offset:3px}a:hover{text-decoration-thickness:2px}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #efb94b;outline-offset:3px}.layout{display:grid;grid-template-columns:260px minmax(0,1fr)}aside{position:sticky;top:0;height:100vh;overflow:auto;background:var(--nav);color:#e6eff8;padding:28px 22px}.brand{font-weight:800;letter-spacing:.13em;font-size:20px}.subtitle{font-size:13px;color:#afc5d8;margin:5px 0 24px}nav a{display:block;color:#c7d8e9;text-decoration:none;padding:7px 10px;border-radius:7px;font-size:14px}nav a:hover{background:#203c53;color:#fff}.nav-tools{border-top:1px solid #365064;margin-top:20px;padding-top:18px}.nav-tools button{background:#24485f;color:#fff;border:1px solid #587a91;border-radius:7px;padding:8px 12px;width:100%}.nav-tools p{font-size:12px;color:#afc5d8}main{max-width:1240px;width:100%;margin:auto;padding:36px 46px 80px;min-width:0}.hero{padding:38px;border-radius:20px;background:linear-gradient(125deg,#123b58,#145d67);color:white;margin-bottom:24px}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#c2eee9}.hero h1{font-size:clamp(30px,4vw,47px);line-height:1.15;margin:14px 0}.hero p{max-width:780px;color:#e0edf5}.hero .meta{font-size:13px;color:#c5dce7}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{border:1px solid #ffffff55;border-radius:999px;padding:4px 12px;font-size:12px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}.stat{padding:20px;background:var(--paper);border:1px solid var(--line);border-radius:12px}.stat strong{display:block;font-size:24px;color:#12566a}.stat span{font-size:13px;color:var(--muted)}section{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:28px;margin:20px 0;min-width:0}h2{font-size:25px;line-height:1.25;margin:0 0 20px;letter-spacing:-.02em}h3{font-size:19px;margin:27px 0 10px}h4{font-size:16px;margin:20px 0 8px}p{margin:10px 0 15px}.lead{font-size:18px;color:var(--muted)}.callout{border-left:4px solid var(--blue);background:#eef5ff;padding:15px 18px;margin:18px 0;border-radius:0 8px 8px 0}.warning{border-color:#c48c20;background:#fff6df}.danger{border-color:#bf3645;background:#fff0f1}.success{border-color:#238467;background:#edf9f4}.callout strong{display:block}.small{font-size:13px;color:var(--muted)}.tag{display:inline-block;font-size:11px;line-height:1.5;font-weight:800;text-transform:uppercase;letter-spacing:.035em;padding:3px 8px;border-radius:5px;white-space:nowrap}.read{background:#e7f0ff;color:#1a4f98}.test{background:#edeaff;color:#55409b}.move{background:#fff0d7;color:#865207}.done{background:#ddf5e9;color:#146248}.pending{background:#fff1da;color:#805000}.danger-tag{background:#ffe3e6;color:#982736}.table-wrap{overflow:auto;margin:16px 0}table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;color:#41576b;background:#f1f5f9;font-size:12px;text-transform:uppercase;letter-spacing:.04em}th,td{padding:12px 13px;border-bottom:1px solid var(--line);vertical-align:top}td code{white-space:normal}code{font:13px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;background:#eef2f7;border-radius:4px;padding:2px 5px;overflow-wrap:anywhere}.command{margin:15px 0 20px;border-radius:10px;background:var(--code);overflow:hidden}.command-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 13px;background:#203347;color:#c6d9e8;font-size:12px}.copy{background:#31506b;color:#fff;border:1px solid #64829b;border-radius:5px;padding:3px 10px;font-size:12px}.command pre{margin:0;padding:17px;overflow:auto;color:#e3edf8;font:13px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:4}.command pre code{background:none;color:inherit;padding:0;white-space:pre;overflow-wrap:normal}pre.tree{padding:20px;background:#f1f5f9;border:1px solid var(--line);border-radius:8px;overflow:auto;font-size:13px}.flow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:18px 0}.flow span{padding:9px 13px;border:1px solid var(--line);border-radius:8px;background:#f7fafc}.flow b{color:var(--blue)}ol,ul{padding-left:23px}li{margin:7px 0}.checklist{list-style:none;padding:0}.checklist label{display:flex;align-items:flex-start;gap:10px;padding:7px}.checklist input{margin-top:6px;accent-color:#176376}.gallery{display:grid;grid-template-columns:1fr 1fr;gap:15px}figure{margin:0;border:1px solid var(--line);padding:12px;border-radius:8px}figure img{display:block;width:100%;height:auto;background:#27292b}figcaption{font-size:12px;color:var(--muted);margin-top:10px}.filelist td:first-child{min-width:210px}.filelist a{overflow-wrap:anywhere}footer{text-align:center;color:var(--muted);padding:25px;font-size:13px}#copy-status{position:fixed;right:20px;bottom:20px;background:#133f38;color:white;border-radius:8px;padding:10px 17px;box-shadow:0 5px 30px #0002;z-index:5}#copy-status:empty{display:none}.back{font-size:13px;float:right}details{margin:15px 0;padding:13px;background:#f7fafc;border:1px solid var(--line);border-radius:8px}summary{font-weight:650;cursor:pointer}.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+p,li,td{overflow-wrap:anywhere}.tag{max-width:100%;white-space:normal}
+@media(max-width:1000px){.layout{grid-template-columns:210px minmax(0,1fr)}aside{padding:22px 12px}main{padding:24px}section{padding:22px}.hero{padding:26px}}
+@media(max-width:720px){.layout{display:block}aside{position:static;height:auto;padding:20px}nav{display:grid;grid-template-columns:1fr 1fr}.subtitle{margin-bottom:12px}.nav-tools{margin-top:12px}.nav-tools button{width:auto}main{padding:14px}.hero{padding:24px}.stats,.two,.gallery{grid-template-columns:1fr}section{padding:19px}h2{font-size:23px}.command pre{font-size:12px}}
+@media print{body{background:white;font-size:10pt;color:#000}.layout{display:block}aside,.copy,.nav-tools,#copy-status,.back{display:none!important}main{max-width:none;padding:0}.hero{background:#fff!important;color:#000;border-bottom:3px solid #173e58;padding:15px 0}.hero p,.hero .meta,.eyebrow{color:#333}.chip{border-color:#aaa}.stats{margin:12px 0}.stat{padding:10px}section{border:none;padding:12px 0;border-top:1px solid #aaa;border-radius:0;margin:12px 0}h2,h3,h4{break-after:avoid}.command{background:#f4f4f4;border:1px solid #aaa;break-inside:avoid}.command-head{background:#e5e5e5;color:#111}.command pre{color:#000;white-space:pre-wrap;font-size:8pt}.command pre code{white-space:pre-wrap;word-break:break-word}table{font-size:9pt}.table-wrap{overflow:visible}tr,figure,.callout{break-inside:avoid}a{color:#000}.gallery{grid-template-columns:1fr 1fr}.hero h1{font-size:28pt}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside aria-label="Guide navigation">
+ <div class="brand">ROBOT_VLA</div><p class="subtitle">Panda tabletop · Lab handbook<br>Snapshot: 19 October 2026</p>
+ <nav aria-label="Contents">
+ <a href="#overview">01 · What we achieved</a><a href="#safety">02 · Read before running</a>
+ <a href="#architecture">03 · How it works</a><a href="#environment">04 · Environment &amp; setup</a>
+ <a href="#terminals">05 · Terminal preparation</a><a href="#startup">06 · Build &amp; open the scene</a>
+ <a href="#restart">07 · Restart vs. continue</a><a href="#inspect">08 · Inspect the live robot</a>
+ <a href="#approach">09 · Approach &amp; descend</a><a href="#grasp">10 · Close the gripper</a>
+ <a href="#lift">11 · Lift 2 cm, then 5 cm</a><a href="#testing">12 · All tests &amp; reports</a>
+ <a href="#files">13 · Complete file map</a><a href="#results">14 · Evidence &amp; numbers</a>
+ <a href="#recovery">15 · Stop, reset &amp; recover</a><a href="#troubleshooting">16 · Troubleshooting</a>
+ <a href="#concepts">17 · Small details explained</a><a href="#checklist">18 · Operator checklist</a>
+ </nav>
+ <div class="nav-tools"><button id="print-guide" type="button">Print / Save as PDF</button><p>Offline document. No commands run from this page. Use Ctrl+F to find a topic.</p></div>
+</aside>
+<main id="top">
+<div class="callout"><strong>20 October update: automated pick-and-place is now available.</strong>This guide below is the historical 19 October record. See the <a href="panda_pick_place.md">new pick-and-place instructions</a> for the blue box, coordinated ROS node on domain 43, validation and visible execution. The later terminal log confirmed the additional 5 cm live lift; that old Isaac process then ended. Its closure displacement was 1.139 mm, correcting the earlier screenshot transcription below. Do not replay the old plans in the new box scene.</div>
+<header class="hero">
+ <div class="eyebrow">Experiment record + operating instructions</div>
+ <h1>From an empty scene<br>to a verified cube lift.</h1>
+ <p>A complete guide to what we built, which files do what, where each command runs, what success looks like, and what to do when something does not match.</p>
+ <div class="chips"><span class="chip">Isaac Sim 6.2</span><span class="chip">ROS 2 Jazzy</span><span class="chip">Franka Panda</span><span class="chip">Simulation only</span></div>
+ <p class="meta">Project: /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA<br>Written from local source, test reports and reviewed GUI screenshots. This is a dated record—not live telemetry.</p>
+</header>
+<div class="stats"><div class="stat"><strong>Grasp confirmed</strong><span>Both fingers contacted the cube in the GUI.</span></div><div class="stat"><strong>1.99 cm lifted</strong><span>Initial live lift confirmed by screenshots.</span></div><div class="stat"><strong>+5 cm tested</strong><span>Isolated test passed; live result not yet supplied.</span></div></div>
+
+<section id="overview">
+<h2>01 · What we have done</h2>
+<p class="lead">We built a classical, scripted pick demonstration. We have not yet built or trained a vision-language-action model.</p>
+<div class="table-wrap"><table><thead><tr><th>Stage</th><th>What happened</th><th>Evidence / status</th></tr></thead><tbody>
+<tr><td>Environment</td><td>Installed Isaac Sim in a project Python environment; used the existing ROS 2 Jazzy installation. The user resolved an earlier driver/library mismatch by rebooting.</td><td><span class="tag done">Working</span> GUI and simulations ran. No agent driver changes.</td></tr>
+<tr><td>Assets &amp; scene</td><td>Downloaded open-source Panda and table assets. Built a static table, floor, light, overview camera and dynamic red 5 cm cube.</td><td><span class="tag done">Built</span> Saved USD scene and asset provenance.</td></tr>
+<tr><td>ROS communication</td><td>Created command, feedback and simulation-clock connections. Built monitor and opt-in demo nodes.</td><td><span class="tag done">Tested</span> Round-trip test observed movement.</td></tr>
+<tr><td>Motion demo</td><td>Enabled a small joint oscillation, then disabled it at the user's request.</td><td><span class="tag done">Stopped</span> Keep this demo disabled for grasp/lift work.</td></tr>
+<tr><td>Position inspection</td><td>Read live world poses; discovered the GUI robot base was about 9.92 cm left of its saved-scene position.</td><td><span class="tag done">Measured</span> World and base frames distinguished.</td></tr>
+<tr><td>Approach</td><td>Solved IK, tested a slow hover path, then sent guarded ROS arm commands.</td><td><span class="tag done">Live completed</span> Approximate grasp height 0.146 m.</td></tr>
+<tr><td>Two descents</td><td>Lowered to about 0.076 m, then about 0.0266 m grasp height, fingers open.</td><td><span class="tag done">Live completed</span> Separate collision/tracking tests first.</td></tr>
+<tr><td>Grasp</td><td>Configured finger drives in the GUI; slowly closed to contact and held with a 5 N drive limit per finger.</td><td><span class="tag done">GUI confirmed</span> Bilateral contact about 4.5 s.</td></tr>
+<tr><td>Initial lift</td><td>Lifted the held cube about 2 cm over 6 seconds, then held for 2 seconds.</td><td><span class="tag done">GUI confirmed</span> Actual cube rise 1.988 cm.</td></tr>
+<tr><td>Higher lift</td><td>Prepared another 5 cm lift over 10 seconds plus 2 seconds holding.</td><td><span class="tag pending">Live confirmation pending</span> Isolated rise 4.981 cm; do not confuse this with a GUI result.</td></tr>
+</tbody></table></div>
+<p><strong>Not implemented yet:</strong> a general-purpose motion planner, automatic fresh-scene replay, camera-based cube detection, VLA inference/training, transport to another location, a validated lowering/release sequence, or hardware robot control.</p>
+</section>
+
+<section id="safety">
+<h2>02 · Read this before running anything</h2>
+<div class="callout danger"><strong>Do not rerun the complete sequence on the robot's current state.</strong>The last confirmed live state is already holding the cube above the table. Approach/descent scripts expect open fingers and earlier arm poses. A reset also does not restore the measured scene automatically.</div>
+<ul>
+<li><strong>Simulation only.</strong> These scripts are not certified safety controllers and are not for a physical Panda.</li>
+<li><strong>No GPU changes:</strong> do not modify drivers, system CUDA, GPU settings, or reboot as part of this guide.</li>
+<li><strong>One motion source at a time.</strong> Keep <code>enable_motion=false</code>. Do not overlap a ROS approach publisher, the demo, and Script Editor motion tasks.</li>
+<li><strong>Check Play/Pause/Stop.</strong> Play advances physics. Pause freezes the current simulation. Stop may reset dynamic state and simulation time. Do not use Stop as a harmless pause.</li>
+<li><strong>A test is not the GUI.</strong> Isolated tests open another simulation and do not move the robot you see in your original window.</li>
+<li><strong>Never bypass a failed preflight</strong> by increasing tolerances or disabling checks. Diagnose the state mismatch.</li>
+<li><strong>No automatic release while lifted.</strong> Opening the fingers can drop the cube. A placement/release procedure has not been validated.</li>
+<li><strong>A successful script ends its monitoring.</strong> Drive targets remain, but long-term holding is not continuously supervised afterward.</li>
+</ul>
+<p>Labels used below:</p><div class="chips"><span class="tag read">Read-only</span><span class="tag test">Separate simulation</span><span class="tag move">Moves live simulation</span><span class="tag danger-tag">Special caution</span></div>
+<p class="small">The Copy buttons copy text only. This HTML does not launch commands, install software, connect to ROS, or move the robot.</p>
+</section>
+
+<section id="architecture">
+<h2>03 · How the system works</h2>
+<div class="flow"><span>ROS Python controller</span><b>→</b><span>/vla_sim/joint_command</span><b>→</b><span>Isaac ROS bridge</span><b>→</b><span>Articulation drives</span><b>→</b><span>PhysX robot</span></div>
+<div class="flow"><span>PhysX joint feedback</span><b>→</b><span>/vla_sim/joint_states</span><b>→</b><span>Monitor / controller</span></div>
+<p>Arm approach/descent used ROS. Gripper closure and lifting use <strong>Python inside Isaac Sim</strong>, because these steps need direct drive settings, contact events and live cube/hand poses. The current ROS graph does <em>not</em> publish the cube pose.</p>
+<div class="table-wrap"><table><thead><tr><th>Interface</th><th>Type / value</th><th>Meaning</th></tr></thead><tbody>
+<tr><td>/vla_sim/joint_states</td><td>sensor_msgs/msg/JointState</td><td>7 arm angles + 2 finger positions, with time, velocity and effort fields.</td></tr>
+<tr><td>/vla_sim/joint_command</td><td>sensor_msgs/msg/JointState</td><td>Position commands selected by joint names.</td></tr>
+<tr><td>/clock</td><td>rosgraph_msgs/msg/Clock</td><td>Simulation time; stops advancing when paused.</td></tr>
+<tr><td>ROS domain</td><td>42</td><td>All relevant ROS terminals must use this domain. Scene graph fixes it to 42.</td></tr>
+<tr><td>Middleware</td><td>rmw_fastrtps_cpp</td><td>DDS implementation used in this workflow.</td></tr>
+<tr><td>Namespace</td><td>/vla_sim</td><td>Contains joint_commander, joint_monitor and temporary motion nodes.</td></tr>
+<tr><td>Articulation root</td><td>/World/panda/Geometry/panda_link0</td><td>Verified robot root; not merely /World/panda.</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="environment">
+<h2>04 · Environment, installation and assets</h2>
+<div class="table-wrap"><table><thead><tr><th>Component</th><th>Recorded working environment</th></tr></thead><tbody>
+<tr><td>OS / Python</td><td>Ubuntu 24.04.4; Python 3.12.3.</td></tr><tr><td>ROS</td><td>ROS 2 Jazzy, sourced from /opt/ros/jazzy/setup.bash.</td></tr>
+<tr><td>Isaac Sim</td><td>Installed package 6.2.0.0; recorded runtime build 6.2.0-rc.14+release.52805.02189a84.gl. Use this tested environment rather than assuming all 6.x APIs match.</td></tr>
+<tr><td>Isaac Python</td><td>env_isaacsim/bin/python under the project root.</td></tr><tr><td>ROS Python</td><td>/usr/bin/python in this machine. Do not substitute the Isaac venv interpreter for ROS scripts.</td></tr>
+<tr><td>Relevant venv packages</td><td>torch 2.11.0+cu128, scipy 1.17.0, trimesh 4.11.1. Metadata checked while writing this guide.</td></tr>
+<tr><td>Hardware context</td><td>RTX PRO 4000 Blackwell, about 24 GB VRAM; Xeon w5-3435X; about 1 TB RAM. Recorded working driver 595.99.02 after the user's earlier reboot.</td></tr>
+</tbody></table></div>
+<h3>What was installed, and what not to reinstall</h3>
+<p>Isaac Sim was installed into <code>env_isaacsim</code> using pip and NVIDIA's package index, with the <code>all</code> and <code>extscache</code> extras. The user accepted the NVIDIA EULA. PyTorch with the cu128 build was installed in that venv. <code>trimesh</code> supports asset conversion; SciPy was used for offline IK calculations. ROS was already installed.</p>
+<div class="callout warning"><strong>The working installation already exists.</strong>There is no complete lockfile or tested clean-machine bootstrap in this repository. Do not replace this environment just to run the demo. Driver/CUDA installation commands are intentionally absent. Restoring on another machine needs a separate compatibility and dependency check.</div>
+<h3>Read-only installation checks</h3>
+<div class="command"><div class="command-head"><span>Linux terminal · read-only · no simulator launch</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+test -x env_isaacsim/bin/python &amp;&amp; echo "Isaac Python exists"
+test -f /opt/ros/jazzy/setup.bash &amp;&amp; echo "ROS Jazzy exists"
+./env_isaacsim/bin/python -m pip show isaacsim torch scipy trimesh
+git -C isaac/assets/bullet3 rev-parse HEAD</code></pre></div>
+<p>The expected Bullet commit is <code>d3afe76132fc76b0f9b2359cbaef47a3766e7fbb</code>. A GPU check such as <code>nvidia-smi</code> is read-only, but no GPU repair or configuration changes are part of this workflow.</p>
+<h3>Open-source assets</h3>
+<ul><li>Repository: <a href="https://github.com/bulletphysics/bullet3">bulletphysics/bullet3</a>.</li>
+<li>Panda: <a href="../isaac/assets/bullet3/examples/pybullet/gym/pybullet_data/franka_panda/panda.urdf">franka_panda/panda.urdf</a>, Apache-2.0 asset license retained.</li>
+<li>Table: <a href="../isaac/assets/bullet3/examples/pybullet/gym/pybullet_data/table/table.urdf">table/table.urdf</a>, repository Zlib license retained.</li>
+<li>Provenance: <a href="../configs/simulation_assets.json">configs/simulation_assets.json</a>. This environment is a simple tabletop, not a downloaded warehouse.</li></ul>
+<details><summary>Asset restoration commands — ONLY if the checkout is missing</summary>
+<p>These commands are an explicit restoration recipe, not a command to run over the existing checkout. They download code/assets but do not configure GPUs. Stop if the destination already exists; do not delete it blindly.</p>
+<div class="command"><div class="command-head"><span>Linux terminal · optional download · empty destination only</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+git clone --filter=blob:none --no-checkout https://github.com/bulletphysics/bullet3.git isaac/assets/bullet3
+git -C isaac/assets/bullet3 sparse-checkout init --cone
+git -C isaac/assets/bullet3 sparse-checkout set examples/pybullet/gym/pybullet_data/franka_panda examples/pybullet/gym/pybullet_data/table
+git -C isaac/assets/bullet3 checkout d3afe76132fc76b0f9b2359cbaef47a3766e7fbb
+git -C isaac/assets/bullet3 rev-parse HEAD</code></pre></div>
+<p>Then rebuild the generated scene. Generated URDF mesh paths and some USD references are absolute; moving the project can break them.</p></details>
+</section>
+
+<section id="terminals">
+<h2>05 · Prepare the terminals correctly</h2>
+<p>Use separate terminals. In VS Code choose <strong>Terminal → New Terminal</strong>. Commands below are Bash commands unless explicitly labelled <strong>Isaac Script Editor</strong>. Do not paste Bash into the Script Editor.</p>
+<div class="table-wrap"><table><thead><tr><th>Terminal</th><th>Purpose</th><th>Interpreter</th></tr></thead><tbody>
+<tr><td>A — Isaac GUI / tests</td><td>Launch the app or bounded isolated tests; do not accidentally launch two ROS-connected simulators.</td><td>./env_isaacsim/bin/python or ./env_isaacsim/bin/isaacsim</td></tr>
+<tr><td>B — ROS nodes</td><td>Run monitor + disabled commander. Leave this command running.</td><td>ROS setup and /usr/bin/python.</td></tr>
+<tr><td>C — ROS commands</td><td>Inspect topics, set demo off, run guarded approach commands.</td><td>ROS setup and /usr/bin/python.</td></tr>
+</tbody></table></div>
+<h3>Prepare a ROS command terminal (C)</h3>
+<div class="command"><div class="command-head"><span>Linux terminal C · setup only</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+source /opt/ros/jazzy/setup.bash
+source ros2_ws/install/setup.bash
+export ROS_DOMAIN_ID=42
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp</code></pre></div>
+<p>If the overlay does not exist yet, build the package in the next section before sourcing <code>ros2_ws/install/setup.bash</code>. Repeat this setup in <strong>every new ROS terminal</strong>; environment variables do not automatically copy into an already-open terminal.</p>
+<h3>Useful terminal basics</h3>
+<ul><li><code>pwd</code> shows your current folder; <code>cd</code> changes it. All relative commands here assume the project root, not its parent or <code>ros2_ws</code>.</li>
+<li><code>source</code> adds an environment to the current shell. It is not an installation.</li>
+<li><code>Ctrl+C</code> stops the foreground terminal program. It is not guaranteed to stop the simulated robot: a drive may retain its last target.</li>
+<li><code>--once</code> reads one ROS message and exits. <code>timeout 10</code> bounds a waiting inspection command; a timeout is not a successful reading.</li>
+<li>You may activate the Isaac venv with <code>source env_isaacsim/bin/activate</code>, but explicit interpreter paths below reduce environment confusion.</li></ul>
+</section>
+
+<section id="startup">
+<h2>06 · Build the package and open the scene</h2>
+<h3>6.1 Build ROS nodes (first use or package-structure changes)</h3>
+<div class="command"><div class="command-head"><span>Linux terminal · build only</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+source /opt/ros/jazzy/setup.bash
+cd ros2_ws
+/usr/bin/colcon build --symlink-install --packages-select vla_sim
+cd ..
+source ros2_ws/install/setup.bash</code></pre></div>
+<p>Expected: a successful <code>vla_sim</code> build. Symlink installation helps source edits take effect, but already-running nodes must still be restarted. Changes to package metadata, entry points or installed resources may require another build.</p>
+<h3>6.2 Generate the saved tabletop scene (only when needed)</h3>
+<div class="callout warning"><strong>Do not rebuild during a live grasp.</strong>This command regenerates assets and overwrites the saved baseline scene; it does not capture the current GUI pose. Keep generated assets intact while a scene references them.</div>
+<div class="command"><div class="command-head"><span>Linux terminal A · generates files · does not populate an existing GUI</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+source /opt/ros/jazzy/setup.bash
+ROS_DOMAIN_ID=42 RMW_IMPLEMENTATION=rmw_fastrtps_cpp ./env_isaacsim/bin/python isaac/scripts/panda_tabletop.py --headless --build-only</code></pre></div>
+<p>Expected output includes <code>SCENE_SAVED=.../isaac/scenes/panda_tabletop.usda</code> and <code>ARTICULATION_ROOT=/World/panda/Geometry/panda_link0</code>. The importer can create numbered output folders on repeated builds; do not assume the next run always uses <code>panda_3</code>.</p>
+<h3>6.3 Launch Isaac GUI (skip if your existing scene is open)</h3>
+<div class="command"><div class="command-head"><span>Linux terminal A · launch one GUI</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+source /opt/ros/jazzy/setup.bash
+export ROS_DOMAIN_ID=42
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+./env_isaacsim/bin/isaacsim</code></pre></div>
+<ol><li>Wait for Isaac Sim startup to finish.</li><li>Use <strong>File → Open</strong> and select <a href="../isaac/scenes/panda_tabletop.usda">isaac/scenes/panda_tabletop.usda</a>.</li><li>If ROS bridge node types are unavailable, open <strong>Window → Extensions</strong>, search for <code>isaacsim.ros2.bridge</code>, enable it, then reopen the scene before proceeding.</li><li>Select <code>/World/Overview</code> as the viewport camera if desired.</li><li>Press <strong>Play</strong>. Let the cube settle on the table.</li><li>Do not assume this fresh scene matches the historical live scene; read section 07.</li></ol>
+<h3>6.4 Start the monitor and disabled demo commander</h3>
+<div class="command"><div class="command-head"><span>Linux terminal B · keep running · motion off by default</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+source /opt/ros/jazzy/setup.bash
+source ros2_ws/install/setup.bash
+export ROS_DOMAIN_ID=42
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+ros2 launch vla_sim panda_demo.launch.py</code></pre></div>
+<p>Expected: the commander says motion requires <code>enable_motion:=true</code>, and the monitor reports joint angles about every two seconds. The commander still has a ROS publisher endpoint when disabled; that does not mean it is sending motion commands.</p>
+<h3>6.5 Existing VS Code tasks</h3>
+<p>Use <strong>Terminal → Run Task</strong> or the Command Palette → <strong>Tasks: Run Task</strong>. Definitions are in <a href="../.vscode/tasks.json">.vscode/tasks.json</a>.</p>
+<ul><li><strong>Build ROS 2 simulation nodes</strong> — colcon build.</li><li><strong>Build Panda tabletop scene</strong> — generate saved baseline scene.</li><li><strong>Monitor Panda (ROS 2, motion off)</strong> — starts two ROS nodes; do not start a second copy if already running.</li><li><strong>Disable Panda demo commands</strong> — stops demo publication, not a physical brake.</li><li><strong>Enable Panda demo motion (simulation only)</strong> — historical oscillation demo; <strong>not for a grasped or lifted cube</strong>.</li></ul>
+</section>
+
+<section id="restart">
+<h2>07 · Continue this session or restart from scratch?</h2>
+<div class="two"><div><h3>Continuing the existing GUI</h3><ul><li>Do not rebuild, reopen or stop the scene unnecessarily.</li><li>Read fresh feedback and inspect the current cube pose.</li><li>Choose only the next stage whose starting conditions match.</li><li>Last confirmed state: initial 2 cm lift completed. Higher-lift execution is not confirmed in this record.</li></ul></div><div><h3>Fresh scene / reset / new machine</h3><ul><li>The robot is near HOME with a different base position.</li><li>Gripper session-layer drive settings may be absent.</li><li>The cube returns to the baseline and settles.</li><li>The historical approach start vector is not automatically restored.</li></ul></div></div>
+<div class="callout danger"><strong>The existing plans are specific to a measured state, not a general replay system.</strong>The GUI base was measured at approximately <code>[-0.0991988853, -0.0000007233, 0.0000269338]</code> m with quaternion <code>[1,0,0,0]</code>. The saved scene uses a near-zero base position. The initial approach was planned from <code>[0.1207,-0.7821,0.0002,-2.3576,0,1.5707,0.7854]</code> rad. A new scene normally does not match both of these conditions.</div>
+<h3>Safe procedure after a reset</h3>
+<ol><li>Start with observation only; keep demo motion off.</li><li>Run the live pose inspector and read joint feedback.</li><li>Compare base position/orientation, cube pose, finger state and arm start against the desired plan.</li><li>If anything differs, stop. Recompute IK/trajectory from the actual state and test it in isolation. The current scripts do not automatically solve a new plan.</li><li>Only execute when start, geometry and validation match. Do not teleport the live arm to bypass a guard.</li></ol>
+<p><strong>Important limitation:</strong> the ROS approach preflight checks joint start, finger state, graph, clock, demo status, and hashes of the plan and saved scene. It does <strong>not</strong> receive the live cube/base pose. A passing preflight cannot detect every unsaved GUI scene edit. The operator must check the live geometry.</p>
+<p>The lift scripts also contain fixed validated joint targets and specific starting-height checks. Repeatedly pressing Run is not an “up another 5 cm” command.</p>
+</section>
+
+<section id="inspect">
+<h2>08 · Inspect before moving</h2>
+<p><span class="tag read">Read-only</span> First prepare terminal C as in section 05.</p>
+<div class="command"><div class="command-head"><span>ROS terminal C · discover nodes, interfaces and status</span></div><pre><code>ros2 node list
+ros2 topic list -t
+timeout 8 ros2 param get /vla_sim/joint_commander enable_motion
+timeout 10 ros2 topic echo /vla_sim/joint_states sensor_msgs/msg/JointState --once
+timeout 10 ros2 topic echo /clock rosgraph_msgs/msg/Clock --once
+timeout 8 ros2 topic info /vla_sim/joint_command --verbose</code></pre></div>
+<p>Expect <code>enable_motion: false</code>, nine joint names, fresh time, and one simulator. Joint names are <code>panda_joint1</code> through <code>panda_joint7</code>, then <code>panda_finger_joint1</code> and <code>panda_finger_joint2</code>. Unknown/duplicate command publishers need investigation.</p>
+<h3>Disable the demo (before all task motion)</h3>
+<div class="command"><div class="command-head"><span>ROS terminal C · stops demo commands only</span></div><pre><code>ros2 param set /vla_sim/joint_commander enable_motion false
+ros2 param get /vla_sim/joint_commander enable_motion</code></pre></div>
+<h3>Base-frame forward kinematics from ROS feedback</h3>
+<div class="command"><div class="command-head"><span>ROS terminal C · read-only FK · not a world/cube measurement</span></div><pre><code>ros2 run vla_sim position_report --urdf /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA/isaac/assets/bullet3/examples/pybullet/gym/pybullet_data/franka_panda/panda.urdf --timeout 10</code></pre></div>
+<p>JSON reports <code>frame: panda_link0</code>. These coordinates are relative to the base. Do not compare them directly to the cube's world coordinates without applying the base transform.</p>
+<h3>Actual live world poses inside Isaac</h3>
+<ol><li>In VS Code open <a href="../isaac/scripts/inspect_live_positions.py">isaac/scripts/inspect_live_positions.py</a>.</li><li>Click inside the editor, press <strong>Ctrl+A</strong>, then <strong>Ctrl+C</strong>.</li><li>In Isaac Sim open <strong>Window → Script Editor</strong>. Menu layout may vary; use the window/menu search if necessary.</li><li>Replace the Script Editor's old code with this file's full contents.</li><li>Make sure physics has been started. For this inspector, Play or Pause after Play is acceptable; stopped is not.</li><li>Click <strong>Run</strong> and read the output panel below the editor.</li></ol>
+<p>Important fields: <code>base_xyz</code>, <code>base_quaternion_wxyz</code>, <code>hand_origin_xyz</code>, <code>grasp_target_xyz</code>, <code>cube_center_xyz</code>, and <code>timeline_time</code>. It uses Fabric world poses or a checked live-USD fallback; it refuses an unverified saved transform.</p>
+<div class="callout"><strong>The inspector's approach target is just a suggestion.</strong>It always computes cube centre + 0.125 m in world Z. Running it after a lift does not command another lift. Its distance value alone does not prove reachability or collision safety.</div>
+</section>
+
+<section id="approach">
+<h2>09 · Approach and descend — exact command order</h2>
+<p>This section documents the successful historical sequence and the commands for <em>matching</em> states. Do not use it as an automatic reset/replay recipe.</p>
+<div class="table-wrap"><table><thead><tr><th>Plan</th><th>Purpose</th><th>Nominal grasp Z</th><th>Move + settle</th><th>Fingers</th></tr></thead><tbody>
+<tr><td><a href="../configs/panda_approach.json">configs/panda_approach.json</a></td><td>Hover above cube</td><td>0.150 m</td><td>12 + 2 s</td><td>Open, 0.04 m each</td></tr>
+<tr><td><a href="../configs/panda_descent.json">configs/panda_descent.json</a></td><td>First downward move</td><td>0.080 m</td><td>10 + 2 s</td><td>Open</td></tr>
+<tr><td><a href="../configs/panda_cube_entry.json">configs/panda_cube_entry.json</a></td><td>Fingers beside cube</td><td>0.030 m</td><td>10 + 2 s</td><td>Open</td></tr>
+</tbody></table></div>
+<p>These are target frame heights, not finger-tip clearance. Gravity and finite drive stiffness caused roughly 4 mm endpoint error. Actual cube-entry grasp height was about 0.0266 m.</p>
+<h3>9.1 Validate the chosen plan in isolation</h3>
+<p><span class="tag test">Separate simulation</span> Run in terminal A or another test terminal from the project root. Run only the plan needed, or all three for a regression check.</p>
+<div class="command"><div class="command-head"><span>Linux test terminal · no ROS commands to the GUI</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+./env_isaacsim/bin/python tests/check_panda_approach.py --plan configs/panda_approach.json
+./env_isaacsim/bin/python tests/check_panda_approach.py --plan configs/panda_descent.json
+./env_isaacsim/bin/python tests/check_panda_approach.py --plan configs/panda_cube_entry.json</code></pre></div>
+<p>The test opens an unsaved scene, removes <code>/World/ROS2</code>, reproduces the measured base offset and plan start, enables self-collision testing with fixed-assembly overlap exclusions, and monitors actual joint positions and contacts. It checks final world pose and cube displacement. This is finite-step testing, not a mathematical proof of continuous collision freedom.</p>
+<p>Expected: JSON <code>"passed": true</code>. Reports are written under <a href="../ros2_ws/log/">ros2_ws/log/</a>. A failed run may write <code>passed: false</code>; do not continue to execution.</p>
+<h3>9.2 Hover preflight (read-only)</h3>
+<div class="command"><div class="command-head"><span>Prepared ROS terminal C · no movement</span></div><pre><code>/usr/bin/python scripts/run_panda_approach.py --plan configs/panda_approach.json</code></pre></div>
+<p>Expected: <code>PREFLIGHT_PASSED: fresh feedback, expected start, one simulator, demo disabled</code>. Also manually confirm live base/cube geometry. A plan or saved-scene hash mismatch requires revalidation.</p>
+<h3>9.3 Execute the hover — only at the matching initial state</h3>
+<div class="command"><div class="command-head"><span>Prepared ROS terminal C · MOVES the open simulation</span></div><pre><code>/usr/bin/python scripts/run_panda_approach.py --plan configs/panda_approach.json --execute</code></pre></div>
+<p>Wait for <code>completed: true</code>. Confirm alignment in the GUI before the next move. The command process exits, leaving position targets active.</p>
+<h3>9.4 First descent — only after confirmed hover</h3>
+<div class="command"><div class="command-head"><span>Prepared ROS terminal C · first read-only, then motion</span></div><pre><code>/usr/bin/python scripts/run_panda_approach.py --plan configs/panda_descent.json</code></pre></div>
+<p>After successful preflight and visual check:</p>
+<div class="command"><div class="command-head"><span>Prepared ROS terminal C · MOVES the open simulation</span></div><pre><code>/usr/bin/python scripts/run_panda_approach.py --plan configs/panda_descent.json --execute</code></pre></div>
+<h3>9.5 Deeper cube entry — only after the first descent</h3>
+<div class="command"><div class="command-head"><span>Prepared ROS terminal C · read-only preflight</span></div><pre><code>/usr/bin/python scripts/run_panda_approach.py --plan configs/panda_cube_entry.json</code></pre></div>
+<p>After successful preflight and visual check:</p>
+<div class="command"><div class="command-head"><span>Prepared ROS terminal C · MOVES the open simulation</span></div><pre><code>/usr/bin/python scripts/run_panda_approach.py --plan configs/panda_cube_entry.json --execute</code></pre></div>
+<h3>What the ROS controller checks</h3>
+<ul><li>Domain 42, passing plan and saved-scene hashes, finite/limited arm angles.</li><li>Initial arm pose within 0.015 rad of the plan; open fingers within 0.002 m.</li><li>Fresh feedback and clock, stable graph discovery, one simulator and no unexpected command publishers.</li><li>Demo remains disabled, clock advances without a large jump or rewind, arm follows its targets.</li><li>For descent plans, minimum height and XY corridor based on FK plus the previously measured base.</li><li>On an execution failure it requests a best-effort measured-position hold if feedback is fresh. This is not a hard emergency stop.</li></ul>
+</section>
+
+<section id="grasp">
+<h2>10 · Close and hold the gripper</h2>
+<p><span class="tag move">Isaac Script Editor</span> Use <a href="../isaac/scripts/close_panda_gripper.py">isaac/scripts/close_panda_gripper.py</a>. This is <strong>not</strong> an ordinary terminal Python program.</p>
+<h3>Why this needed a GUI-side script</h3>
+<p>The saved imported finger drives had stiffness 0, damping 0 and a 20 N maximum force. A ROS position command alone would not provide the intended holding drive. The closure script configures the existing drives in the <strong>session layer</strong>, without changing GPU settings or attaching the cube.</p>
+<div class="table-wrap"><table><thead><tr><th>Setting</th><th>Value</th><th>Interpretation</th></tr></thead><tbody>
+<tr><td>Drive type</td><td>force</td><td>Position-error-based motor drive with force limit.</td></tr><tr><td>Stiffness / damping</td><td>1000 / 20</td><td>Drive gains used in the tested scene.</td></tr><tr><td>Max force</td><td>5 N per finger</td><td>A limit, not a measured constant contact force.</td></tr><tr><td>Open position</td><td>0.04 m per finger</td><td>About 8 cm total nominal opening.</td></tr><tr><td>Commanded closed target</td><td>0.023 m per finger</td><td>The cube stops actual travel near 0.02508 m; this difference produces squeeze.</td></tr><tr><td>Timing</td><td>4 s closing + 2 s observation</td><td>No arm lift during closure.</td></tr></tbody></table></div>
+<h3>Run it</h3>
+<ol><li>Finish the cube-entry move. The fingers must be open and beside the cube, not above it.</li><li>Keep the demo off and stop other motion publishers. Leave Isaac <strong>playing</strong>.</li><li>Copy the entire closure file into Isaac's Script Editor, replacing the previous code.</li><li>Click <strong>Run once</strong>. The script schedules an asynchronous task; wait for its output.</li><li>Success prints <code>"closed_and_holding": true</code>. Check the fingers visually and keep the output or a screenshot.</li></ol>
+<p>It checks live gripper alignment, both finger contacts, finger symmetry, arm stability, cube motion and tilt. It uses FOUND/PERSIST/LOST contact lifetimes because sleeping bodies stop emitting repeated contact events. On a handled failure while playing, it requests measured finger-position targets to remove squeeze; it does not deliberately reopen or move the arm.</p>
+<div class="callout warning"><strong>Do not rerun closure on already-closed fingers.</strong>The initial open-finger check will reject it. Do not remove that check. “Holding” means drive-based contact, not a fixed constraint and not yet proof of successful lifting.</div>
+</section>
+
+<section id="lift">
+<h2>11 · Lift slowly, then lift higher</h2>
+<h3>11.1 First lift: 2 cm</h3>
+<p><span class="tag move">Isaac Script Editor</span> File: <a href="../isaac/scripts/lift_panda_cube.py">isaac/scripts/lift_panda_cube.py</a>.</p>
+<ol><li>Require a successful closure: fingers near 0.02508 m each, tested drive settings still present, cube on the table.</li><li>Keep Play active, demo off and all other motion controllers inactive.</li><li>Copy the <strong>entire file</strong> into the Script Editor and click <strong>Run once</strong>.</li><li>Wait for the 6-second lift and 2-second hold.</li><li>Success prints <code>lift_verified: true</code> and, with the current code, <code>lift_profile: initial_2cm</code>.</li></ol>
+<p>The reviewed live screenshots showed the earlier equivalent report without the profile field. They confirmed a 1.988 cm cube rise and 0.105 mm maximum relative slip.</p>
+<h3>11.2 Additional lift: 5 cm</h3>
+<p><span class="tag pending">Prepared and isolated-tested; live outcome pending</span></p>
+<ol><li>Begin only from the successful initial 2 cm lift. The cube centre should be near world Z = 0.045 m.</li><li>Open <a href="../isaac/scripts/lift_panda_cube_higher.py">isaac/scripts/lift_panda_cube_higher.py</a> in VS Code.</li><li>Copy its complete, short contents into Isaac's Script Editor, replacing the previous script.</li><li>Click <strong>Run once</strong>. It loads the updated main controller from the local project, then requests <code>higher=True</code>.</li><li>Wait for 10 seconds of motion and 2 seconds of holding.</li><li>Expect <code>lift_verified: true</code> and <code>lift_profile: additional_5cm</code>. Save/share this output to confirm the live result.</li></ol>
+<p>The isolated test ended with the cube centre at Z ≈ 0.0946 m. For an upright 5 cm cube, its bottom is then about 0.0696 m above the table—not 9.46 cm. This is a test result, not the current GUI height.</p>
+<h3>What both lift modes protect against</h3>
+<ul><li>Wrong initial arm pose, wrong cube height or alignment, incorrect base pose, missing contact reporters, or changed gripper gains.</li><li>Joint tracking error above 0.02 rad; finger positions changing by more than 0.0015 m from the initial grip.</li><li>Cube/gripper relative displacement above 3 mm; cube XY drift above 4 mm; tilt beyond the configured limit.</li><li>Unexpected reported robot contacts and clock/stage/playback changes.</li><li>Failure to achieve the requested cube rise within ±4 mm.</li></ul>
+<p><strong>On a motion failure, the script pauses physics.</strong> It does not open the gripper, keep moving upward, or automatically lower the cube. Read the error before resuming. Reporters are reused from closure; the contact check is not an exhaustive self-collision monitor.</p>
+<div class="callout"><strong>Why run this inside Isaac instead of sending blind ROS arm commands?</strong>The GUI-side controller can check the cube's actual world pose every update. ROS joint feedback alone cannot tell whether the cube followed the hand or fell. This assistant cannot directly click Run in your desktop Isaac Script Editor, so that is the manual execution step.</div>
+<p>The higher-lift entry currently contains this machine's absolute project path. If the project is moved, update that path and revalidate before use. Do not rerun either lift from an already higher pose or edit constants to request an arbitrary lift.</p>
+</section>
+
+<section id="testing">
+<h2>12 · Tests, outputs and report files</h2>
+<h3>12.1 Unit tests — no robot motion</h3>
+<div class="command"><div class="command-head"><span>Linux terminal · system Python with ROS overlay</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+source /opt/ros/jazzy/setup.bash
+source ros2_ws/install/setup.bash
+/usr/bin/python -m pytest ros2_ws/src/vla_sim/test -q</code></pre></div>
+<p>Last recorded result: <strong>18 passed</strong>. Tests cover ordering/limits, smooth motion, kinematics and descent guard bounds. These unit tests do not establish a successful physical grasp.</p>
+<h3>12.2 Runtime world-pose inspector test</h3>
+<div class="command"><div class="command-head"><span>Linux test terminal · isolated scene</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+./env_isaacsim/bin/python tests/check_panda_positions.py</code></pre></div>
+<p>This opens the saved baseline, removes the ROS graph and reads live simulated poses. It expects the baseline base near zero and a settled cube. It is not an FK-only test and does not read your existing GUI scene.</p>
+<h3>12.3 Grasp and lift tests</h3>
+<div class="command"><div class="command-head"><span>Linux test terminal · choose one test scope · isolated, no live ROS commands</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+# Closure only:
+./env_isaacsim/bin/python tests/check_panda_grasp.py
+
+# Closure + initial 2 cm lift:
+./env_isaacsim/bin/python tests/check_panda_grasp.py --lift
+
+# Full closure + 2 cm + additional 5 cm sequence:
+./env_isaacsim/bin/python tests/check_panda_grasp.py --higher</code></pre></div>
+<p>Choose the scope you need; you do not need all three every time. Expected markers: <code>GRASP_VALIDATION_PASSED</code>, <code>LIFT_VALIDATION_PASSED</code>, <code>HIGHER_LIFT_VALIDATION_PASSED</code>, depending on flags. The same coroutines/entry script used in the GUI are exercised.</p>
+<h3>12.4 ROS round-trip integration test — special caution</h3>
+<div class="callout danger"><strong>Do not run this while the live GUI is connected to domain 42.</strong>This test starts a new simulator, rebuilds the baseline scene and actively publishes demo commands on the same ROS domain. It can move another connected simulation. Close the live simulator and stop the normal ROS launch before running it in an exclusive test session. An external domain environment variable does not isolate it: the script itself selects 42.</div>
+<div class="command"><div class="command-head"><span>Exclusive test session ONLY · actively publishes commands · rebuilds saved scene</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+source /opt/ros/jazzy/setup.bash
+source ros2_ws/install/setup.bash
+/usr/bin/python tests/check_panda_ros2.py</code></pre></div>
+<p>Run this file directly, <strong>not as a pytest test</strong>: its entry point is <code>main()</code>. Historical result: 1199 states, 400 commands, 1199 clocks, and 0.300 rad joint-1 movement. Exact counts can vary. Log: <a href="../ros2_ws/log/panda_integration.log">ros2_ws/log/panda_integration.log</a>.</p>
+<h3>12.5 Capture a noisy simulator test log</h3>
+<div class="command"><div class="command-head"><span>Linux test terminal · captures output and preserves failure status</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+./env_isaacsim/bin/python tests/check_panda_grasp.py --higher &gt; /tmp/robot_vla_higher_lift_check.log 2&gt;&amp;1
+result=$?
+tail -n 95 /tmp/robot_vla_higher_lift_check.log
+[[ "$result" -eq 0 ]]</code></pre></div>
+<p>Look for success markers <em>and</em> failure tracebacks, not just the last startup message. Some Isaac shutdown paths have hidden exceptions in the past, so the scripts explicitly print tracebacks. A warning about absent ROS node types may appear in an isolated test that removes the graph; this is not permission to ignore every error.</p>
+<h3>Report index</h3>
+<div class="table-wrap"><table><thead><tr><th>Report</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><a href="../ros2_ws/log/panda_approach_validation.json">panda_approach_validation.json</a> / <a href="../ros2_ws/log/panda_approach_execution.json">panda_approach_execution.json</a></td><td>Separate hover test / live ROS execution.</td></tr>
+<tr><td><a href="../ros2_ws/log/panda_descent_validation.json">panda_descent_validation.json</a> / <a href="../ros2_ws/log/panda_descent_execution.json">panda_descent_execution.json</a></td><td>Separate first-descent test / live ROS execution.</td></tr>
+<tr><td><a href="../ros2_ws/log/panda_cube_entry_validation.json">panda_cube_entry_validation.json</a> / <a href="../ros2_ws/log/panda_cube_entry_execution.json">panda_cube_entry_execution.json</a></td><td>Separate cube-entry test / live ROS execution.</td></tr>
+<tr><td><a href="../ros2_ws/log/panda_grasp_validation.json">panda_grasp_validation.json</a></td><td>Isolated closure result, not the GUI's closure report.</td></tr>
+<tr><td><a href="../ros2_ws/log/panda_lift_validation.json">panda_lift_validation.json</a></td><td>Isolated initial lift result.</td></tr>
+<tr><td><a href="../ros2_ws/log/panda_higher_lift_validation.json">panda_higher_lift_validation.json</a></td><td>Isolated higher lift result; live result still pending in this guide.</td></tr>
+</tbody></table></div>
+<p>Reports overwrite on later runs. A report is not automatically current or a complete experiment archive. Grasp/lift test failures can leave an older successful JSON file behind; use that run's terminal result. GUI scripts print their report; they do not automatically write the above validation files.</p>
+</section>
+
+<section id="files">
+<h2>13 · Files: what each one does and where it runs</h2>
+<p>All paths are relative to the project root. Links open local files; browsers may display or download Python rather than execute it.</p>
+<div class="table-wrap"><table class="filelist"><thead><tr><th>File</th><th>Role</th><th>Run location</th></tr></thead><tbody>
+<tr><td><a href="../isaac/scripts/panda_tabletop.py">isaac/scripts/panda_tabletop.py</a></td><td>Converts URDF assets, repairs generated link6 mesh, creates scene and ROS graph; optional simulation loop.</td><td>Isaac venv terminal, starts SimulationApp.</td></tr>
+<tr><td><a href="../isaac/scripts/inspect_live_positions.py">isaac/scripts/inspect_live_positions.py</a></td><td>Read-only live base/hand/grasp/cube world report.</td><td>Isaac Script Editor.</td></tr>
+<tr><td><a href="../scripts/run_panda_approach.py">scripts/run_panda_approach.py</a></td><td>One-shot ROS arm approach/descent; default read-only; --execute enables commands.</td><td>System Python, sourced ROS environment.</td></tr>
+<tr><td><a href="../isaac/scripts/close_panda_gripper.py">isaac/scripts/close_panda_gripper.py</a></td><td>Configure finger drives, close slowly, verify bilateral contact, hold.</td><td>Isaac Script Editor, playing.</td></tr>
+<tr><td><a href="../isaac/scripts/lift_panda_cube.py">isaac/scripts/lift_panda_cube.py</a></td><td>Monitored lift controller. Direct execution requests initial2cm; lift_cube(higher=True) selects additional5cm.</td><td>Isaac Script Editor / imported by higher entry.</td></tr>
+<tr><td><a href="../isaac/scripts/lift_panda_cube_higher.py">isaac/scripts/lift_panda_cube_higher.py</a></td><td>Short entry loading the controller and scheduling the additional5cm mode.</td><td>Isaac Script Editor, after initial lift.</td></tr>
+<tr><td><a href="../configs/panda_approach.json">configs/panda_approach.json</a></td><td>Measured initial state, base/cube poses, hover joint target and bounds.</td><td>Data, not executable.</td></tr>
+<tr><td><a href="../configs/panda_descent.json">configs/panda_descent.json</a></td><td>First descent start/target and height/alignment bounds.</td><td>Data.</td></tr>
+<tr><td><a href="../configs/panda_cube_entry.json">configs/panda_cube_entry.json</a></td><td>Deeper descent start/target; also initializes isolated grasp tests.</td><td>Data.</td></tr>
+<tr><td><a href="../configs/simulation_assets.json">configs/simulation_assets.json</a></td><td>Asset repository, revision, licenses, paths and ROS conventions.</td><td>Reference data.</td></tr>
+<tr><td><a href="../ros2_ws/src/vla_sim/launch/panda_demo.launch.py">ros2_ws/src/vla_sim/launch/panda_demo.launch.py</a></td><td>Starts joint_commander and joint_monitor, domain42 and simulated time.</td><td>ros2 launch.</td></tr>
+<tr><td><a href="../ros2_ws/src/vla_sim/vla_sim/joint_commander.py">ros2_ws/src/vla_sim/vla_sim/joint_commander.py</a></td><td>Opt-in HOME transition and joint1 oscillation. Not the grasp controller.</td><td>ROS launch / installed entry point.</td></tr>
+<tr><td><a href="../ros2_ws/src/vla_sim/vla_sim/joint_monitor.py">ros2_ws/src/vla_sim/vla_sim/joint_monitor.py</a></td><td>Read-only periodic state/staleness logging.</td><td>ROS launch.</td></tr>
+<tr><td><a href="../ros2_ws/src/vla_sim/vla_sim/position_report.py">ros2_ws/src/vla_sim/vla_sim/position_report.py</a></td><td>One-message URDF FK report in the base frame.</td><td>ros2 run with --urdf.</td></tr>
+<tr><td><a href="../ros2_ws/src/vla_sim/vla_sim/motion.py">ros2_ws/src/vla_sim/vla_sim/motion.py</a></td><td>Joint names, URDF limits, HOME, ordering/finite validation and demo interpolation.</td><td>Imported helper.</td></tr>
+<tr><td><a href="../ros2_ws/src/vla_sim/vla_sim/kinematics.py">ros2_ws/src/vla_sim/vla_sim/kinematics.py</a></td><td>URDF transform-chain FK using joint origin and motion transforms.</td><td>Imported helper; not an IK planner.</td></tr>
+<tr><td><a href="../ros2_ws/src/vla_sim/vla_sim/approach.py">ros2_ws/src/vla_sim/vla_sim/approach.py</a></td><td>Plan loading/hash, bounded smoothstep sampling, optional grasp-height/XY checks.</td><td>Imported helper.</td></tr>
+<tr><td><a href="../ros2_ws/src/vla_sim/setup.py">setup.py</a>, <a href="../ros2_ws/src/vla_sim/setup.cfg">setup.cfg</a>, <a href="../ros2_ws/src/vla_sim/package.xml">package.xml</a>, <a href="../ros2_ws/src/vla_sim/resource/vla_sim">resource/vla_sim</a></td><td>ROS package metadata, installation, launch data and console entry points.</td><td>Used by colcon/ament; do not run as motion scripts.</td></tr>
+<tr><td><a href="../tests/check_panda_positions.py">tests/check_panda_positions.py</a></td><td>Isolated runtime inspector test.</td><td>Isaac venv terminal.</td></tr>
+<tr><td><a href="../tests/check_panda_approach.py">tests/check_panda_approach.py</a></td><td>Isolated plan validation; --plan selects JSON.</td><td>Isaac venv terminal.</td></tr>
+<tr><td><a href="../tests/check_panda_grasp.py">tests/check_panda_grasp.py</a></td><td>Isolated closure; --lift or --higher extends sequence.</td><td>Isaac venv terminal.</td></tr>
+<tr><td><a href="../tests/check_panda_ros2.py">tests/check_panda_ros2.py</a></td><td>Active ROS integration test, launches simulator and publishes demo commands.</td><td>System Python; exclusive domain42 session.</td></tr>
+<tr><td><a href="../ros2_ws/src/vla_sim/test/test_motion.py">test_motion.py</a>, <a href="../ros2_ws/src/vla_sim/test/test_kinematics.py">test_kinematics.py</a>, <a href="../ros2_ws/src/vla_sim/test/test_approach.py">test_approach.py</a></td><td>ROS-package unit tests.</td><td>pytest with system Python.</td></tr>
+<tr><td><a href="../isaac/scenes/panda_tabletop.usda">isaac/scenes/panda_tabletop.usda</a></td><td>Generated baseline scene; not a capture of the current grasp.</td><td>Open in Isaac GUI.</td></tr>
+<tr><td><a href="../isaac/assets/generated/">isaac/assets/generated/</a></td><td>Prepared URDFs, link6.stl, importer USD folders and dependencies.</td><td>Generated by scene builder.</td></tr>
+<tr><td><a href="../isaac/assets/bullet3/">isaac/assets/bullet3/</a></td><td>Original external asset checkout and licenses.</td><td>Asset source; originals preserved.</td></tr>
+<tr><td><a href="../.vscode/tasks.json">.vscode/tasks.json</a></td><td>Local build/monitor/demo tasks.</td><td>VS Code Tasks menu.</td></tr>
+<tr><td><a href="../src/utils/transforms_2d.py">src/utils/transforms_2d.py</a>, <a href="../src/utils/homogeneous_2d.py">src/utils/homogeneous_2d.py</a></td><td>Earlier robotics math exercises. Not part of Panda runtime control.</td><td>Learning source.</td></tr>
+<tr><td><a href="00_the_basics.md">00_the_basics.md</a>, <a href="phase0_environment.md">phase0_environment.md</a>, <a href="phase1_transforms.md">phase1_transforms.md</a>, <a href="phase1b_homogeneous.md">phase1b_homogeneous.md</a></td><td>Earlier notes, with related LaTeX/PDF files. Some old environment/progress statements may be outdated.</td><td>Documentation.</td></tr>
+<tr><td><a href="../old%20realtime.py">old realtime.py</a></td><td>Pre-existing unrelated script; not used or audited for this tabletop workflow.</td><td>Do not include in this run sequence.</td></tr>
+</tbody></table></div>
+<p>Other folders—<a href="../src/perception/">src/perception/</a>, <a href="../src/control/">src/control/</a>, <a href="../src/vla/">src/vla/</a>, <a href="../notebooks/">notebooks/</a>, <a href="../data/datasets/">data/datasets/</a> and <a href="../data/checkpoints/">data/checkpoints/</a>—are scaffolding for later work, not evidence that a VLA model is implemented.</p>
+</section>
+
+<section id="results">
+<h2>14 · Results and visual evidence</h2>
+<p>Numbers below are historical results from this session. “Estimated” means live joint FK plus the earlier base measurement, not a fresh world-pose observation.</p>
+<div class="table-wrap"><table><thead><tr><th>Stage</th><th>Live or isolated?</th><th>Recorded result</th></tr></thead><tbody>
+<tr><td>Hover</td><td>Live ROS</td><td>Estimated grasp [0.498307, 0.000181, 0.146135] m; target error 4.223 mm; 224 commands.</td></tr>
+<tr><td>First descent</td><td>Live ROS</td><td>Estimated grasp Z 0.076435 m; 192 commands; fingers open.</td></tr>
+<tr><td>Cube entry</td><td>Live ROS</td><td>Estimated grasp Z 0.026614 m; additional descent 49.82 mm; fingers open.</td></tr>
+<tr><td>Closure</td><td>Live GUI screenshots</td><td>Bilateral contact 4.5 s; finger positions about 0.0250798 m; cube moved 0.114 mm.</td></tr>
+<tr><td>Initial lift</td><td>Live GUI screenshots</td><td>Cube rise 0.0198842473 m; maximum relative slip 0.0001048078 m; final cube Z 0.0448814668 m.</td></tr>
+<tr><td>Higher lift</td><td>Isolated test only</td><td>Additional cube rise 0.0498109348 m; maximum relative slip 0.0000043614 m; final cube Z 0.0946123153 m.</td></tr>
+</tbody></table></div>
+<div class="gallery">
+<figure><a href="../IMAGES/GRIPPERCLOSED/Screenshot%20from%202026-10-19%2017-16-56.png"><img loading="lazy" src="../IMAGES/GRIPPERCLOSED/Screenshot%20from%202026-10-19%2017-16-56.png" alt="GUI closure output showing closed_and_holding true and both finger positions near 0.02508 metres"></a><figcaption>Live closure: success and finger positions.</figcaption></figure>
+<figure><a href="../IMAGES/GRIPPERCLOSED/Screenshot%20from%202026-10-19%2017-17-04.png"><img loading="lazy" src="../IMAGES/GRIPPERCLOSED/Screenshot%20from%202026-10-19%2017-17-04.png" alt="Closure output showing force limit, bilateral contact time, small cube displacement and no lift"></a><figcaption>Live closure: contact and movement checks.</figcaption></figure>
+<figure><a href="../IMAGES/LIFT/Screenshot%20from%202026-10-19%2017-25-09.png"><img loading="lazy" src="../IMAGES/LIFT/Screenshot%20from%202026-10-19%2017-25-09.png" alt="GUI initial lift output showing lift_verified true and cube rise about 0.01988 metres"></a><figcaption>Live initial lift: measured cube rise and slip.</figcaption></figure>
+<figure><a href="../IMAGES/LIFT/Screenshot%20from%202026-10-19%2017-25-17.png"><img loading="lazy" src="../IMAGES/LIFT/Screenshot%20from%202026-10-19%2017-25-17.png" alt="Initial lift final cube world coordinates and finger positions"></a><figcaption>Live initial lift: final cube and finger positions.</figcaption></figure>
+</div>
+<p class="small">Images and source/report links are local files next to this guide's repository. The guide's text, styling and controls work offline; copying only the HTML elsewhere will not carry the linked screenshots or source files with it.</p>
+</section>
+
+<section id="recovery">
+<h2>15 · Stop, pause, reset and preserve work</h2>
+<h3>If something looks wrong while moving</h3>
+<ol><li>Click <strong>Pause in Isaac Sim</strong> to freeze physics. This is a simulation action, not a hardware emergency stop.</li><li>Do not reopen the gripper or enable the demo while diagnosing.</li><li>Read the Script Editor or terminal error. Record the message and current stage.</li><li>Stop a running terminal controller with Ctrl+C if needed. Do not assume this alone cancels retained drive targets.</li><li>Keep the demo parameter false. Before pressing Play again, inspect pending targets and resolve the failed guard. A paused script may have left a previously commanded target active.</li></ol>
+<h3>What persists?</h3>
+<ul><li>GUI closure/lift author changes into the USD <strong>session layer</strong>. They leave drive targets active but do not save the stage.</li><li>An ordinary save of the root layer is not a complete runtime checkpoint. It does not automatically capture the session layer, dynamic pose, controller state or grasp history.</li><li>Pause usually preserves the current simulated state. Stop/restart, stage reopen or app exit must be treated as state invalidation; verify again.</li><li>Approach commands are runtime actuator targets. Report JSON and screenshots are evidence, not restartable simulator snapshots.</li></ul>
+<h3>What to back up</h3>
+<p>Preserve source scripts, configs, this guide, the original asset revision/licenses and screenshots. For reproducibility also archive the generated scene <em>with all referenced generated assets</em>, environment/package information and relevant reports. Many of these are ignored by Git.</p>
+<div class="command"><div class="command-head"><span>Linux terminal · read-only Git inventory</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+git status --short
+git check-ignore .vscode/tasks.json env_isaacsim/bin/python isaac/scenes/panda_tabletop.usda ros2_ws/log/panda_higher_lift_validation.json</code></pre></div>
+<p><a href="../.gitignore">.gitignore</a> ignores the venv, assets, USD files, ROS build/install/log folders and <strong>.vscode/</strong>. A successful local run does not mean all required files have been committed. Do not blindly force-add large environments/assets.</p>
+<h3>Starting over intentionally</h3>
+<p>Only do this when abandoning the current held-object state is acceptable. Pause, stop motion sources, then close/reopen or rebuild the baseline as needed. Return to section 07: fresh poses require replanning. There is no tested one-button safe placement/reset routine yet.</p>
+<details><summary>Historical motion-demo command — NOT for a grasped or lifted cube</summary>
+<p>The demo transitions toward HOME over 5 s and then oscillates joint1. It is independent of the cube task and may move through unsuitable geometry from an arbitrary starting pose. Use only in a known free, validated demo scene.</p>
+<div class="command"><div class="command-head"><span>Prepared ROS terminal C · historical demo · MOVES the arm</span></div><pre><code>ros2 param set /vla_sim/joint_commander enable_motion true</code></pre></div>
+<p>Disable it afterward:</p><div class="command"><div class="command-head"><span>Prepared ROS terminal C · stops new demo commands</span></div><pre><code>ros2 param set /vla_sim/joint_commander enable_motion false</code></pre></div>
+</details>
+</section>
+
+<section id="troubleshooting">
+<h2>16 · Troubleshooting without guessing</h2>
+<div class="table-wrap"><table><thead><tr><th>Symptom / message</th><th>Meaning and next action</th></tr></thead><tbody>
+<tr><td>ros2: command not found</td><td>Source /opt/ros/jazzy/setup.bash in that terminal. The command is not /usr/bin/ros2 in this installation.</td></tr>
+<tr><td>Package vla_sim not found</td><td>Build via colcon, then source ros2_ws/install/setup.bash in the terminal being used.</td></tr>
+<tr><td>No joint feedback / monitor stale</td><td>Check scene open, Play, ROS bridge extension, domain42 and middleware. Verify only one simulator. Do not issue blind commands.</td></tr>
+<tr><td>Start differs from validated configuration</td><td>Wrong stage in the sequence, a reset, or changed robot pose. Read current joints/poses and replan if needed. Do not bypass.</td></tr>
+<tr><td>Fingers are not open as validated</td><td>Approach/descent scripts cannot be reused while gripping. Keep the current grip; choose the appropriate lift or a separately validated placement plan.</td></tr>
+<tr><td>Plan/saved-scene hash mismatch</td><td>The saved scene or plan changed. Run the matching isolated validation, then recheck live geometry. A hash does not cover every referenced asset or unsaved GUI change.</td></tr>
+<tr><td>_NODE_NAME_UNKNOWN_ / graph not ready</td><td>ROS discovery can be transient. The preflight waits for a stable graph; if it still fails, check duplicates and middleware. Do not allow unknown publishers just to proceed.</td></tr>
+<tr><td>Gripper does not close from a ROS target</td><td>Saved finger gains were zero. Use the tested GUI closure that sets force-mode drive gains; do not merely command zero gap.</td></tr>
+<tr><td>Expected both fingers open</td><td>Closure was already run or fingers changed. Do not rerun closure on a held cube.</td></tr>
+<tr><td>Live gripper not aligned / cube wrong height</td><td>Inspect live world poses. A top-view visual overlap alone is insufficient. The stage-specific guards intentionally reject wrong heights.</td></tr>
+<tr><td>No sustained bilateral contact</td><td>Do not claim a grasp. Read actual finger positions and contact results. The implemented monitor handles contact sleep via FOUND/PERSIST/LOST lifetimes.</td></tr>
+<tr><td>Cube slipped / left lift corridor / tilted</td><td>The lift pauses. Do not increase grip force or ignore the error without diagnosis. Preserve the frozen state and inspect cube/hand motion.</td></tr>
+<tr><td>Failed to get DOF positions / tensor view invalidated</td><td>Stage edits can rebuild PhysX shapes. Do not add new schemas on ancestor robot links during playback. The working lift reuses closure's reporters; recreate views only in a controlled, tested workflow.</td></tr>
+<tr><td>Fabric world pose unavailable</td><td>The inspector/lift can use USD only when /physics/updateToUsd confirms live updates. Do not report a saved transform as live.</td></tr>
+<tr><td>VS Code cannot resolve carb, omni, usdrt or pxr</td><td>These modules are provided by the Isaac runtime/extensions. Run GUI scripts in Isaac; do not install similarly named unrelated packages. Editor diagnostics alone do not establish runtime failure.</td></tr>
+<tr><td>Nothing happens after Script Editor Run</td><td>Look for preflight errors and async output. Confirm full code was pasted, the intended entry block executes, and Play is active. Do not repeatedly click Run while a task is pending.</td></tr>
+<tr><td>Higher-lift controller file not found</td><td>The short entry has an absolute path to this workspace. Restore the file or update the path deliberately, then retest.</td></tr>
+<tr><td>Scene generation works but existing GUI is unchanged</td><td>A headless process has its own stage. Open the generated USD explicitly in the GUI only when you intend to replace the current state.</td></tr>
+<tr><td>Mesh import error on Panda link6</td><td>The builder makes a cleaned generated STL from the collision mesh. Preserve upstream assets and use the builder, not manual edits to the source OBJ.</td></tr>
+<tr><td>Old URDF importer examples fail</td><td>This Isaac version uses URDFImporter/URDFImporterConfig. The working builder is the reference. Joint state initialization uses pxr.PhysxSchema.JointStateAPI.</td></tr>
+<tr><td>Driver/library mismatch returns</td><td>Stop simulator work and report the read-only diagnostic. GPU repair and reboot are not authorized by this guide; do not modify driver/CUDA packages.</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="concepts">
+<h2>17 · Small details that matter</h2>
+<h3>Coordinates and units</h3>
+<ul><li><strong>World:</strong> the scene's fixed coordinate system. Z points up; gravity is −9.81 m/s² along Z.</li><li><strong>Base:</strong> panda_link0 coordinates. World position = base translation + base rotation × base-relative position.</li><li><strong>Grasp target:</strong> panda_grasptarget is 0.105 m along the hand's local Z. With the hand pointing down, it lies below the hand origin. It is a coordinate frame, not a measured finger-tip clearance.</li><li><strong>Quaternion ordering:</strong> these scripts use w,x,y,z, not x,y,z,w.</li><li><strong>ROS arm positions:</strong> radians. <strong>USD angular drive targets:</strong> degrees. <strong>Finger prismatic joints:</strong> metres. Mixing these can produce very wrong motion.</li><li><strong>Cube:</strong> 0.05 m side length, 0.05 kg mass. Centre on table ≈0.025 m; top≈0.05 m. Baseline saved centre starts at0.04 m and settles.</li><li><strong>Cube height vs clearance:</strong> upright cube bottom = centre Z −0.025 m. The grasp-frame height is not the cube-bottom height.</li></ul>
+<h3>FK, IK and the paths we used</h3>
+<p><strong>FK</strong> (forward kinematics) computes hand pose from joint angles and URDF transforms. <strong>IK</strong> (inverse kinematics) solves joint angles for a desired pose. Offline SciPy least-squares calculations produced the tested targets; there is no standalone automatic replanner in this project yet. The redundant arm solve held joint3 fixed for these poses and used joint bounds.</p>
+<p>Motion uses smoothstep interpolation: <code>s = clamp(t / duration, 0, 1)</code>, <code>b = s²(3 − 2s)</code>, <code>q = q_start + b(q_target − q_start)</code>. This gives zero nominal endpoint velocity. It is a joint-space path, not a guaranteed perfectly straight Cartesian line.</p>
+<h3>What “lock the gripper” means here</h3>
+<p>The motor targets keep applying bounded squeeze against the cube. There is no weld, parenting trick, kinematic attachment, or artificial fixed joint. The demonstrated lift therefore depends on physics contacts and friction. A 5 N maximum drive setting is not proof that each contact continuously measures exactly 5 N.</p>
+<h3>Scene construction details</h3>
+<ul><li>Panda is imported with a fixed base. Original scene self-collisions are disabled; the approach isolation test enables checks and excludes rigidly fixed assembly pairs whose imported meshes overlap.</li><li>Table translation: (0.35,0,−0.625) m. Its joints are deactivated and rigid-body/articulation APIs removed so it is static scenery.</li><li>Arm drives: stiffness400 and damping40 for all seven joints; max effort87 for joints1–4 and12 for joints5–7. Those 12 values are effort limits, not stiffness values.</li><li>Floor: centre (0,0,−0.68) m, size6×6×0.1 m. Overview camera looks from (2,2,1.6) toward (0.3,0,0.2).</li><li>The importer preserves originals; generated URDFs contain absolute mesh paths and use the cleaned link6 STL. This can change visual fidelity for that link.</li></ul>
+<h3>What the tests do not prove</h3>
+<p>A passed finite simulation is not a guarantee for all poses, objects, friction values, loads or future edits. The current system has no physical robot safety layer, no long-term grip watchdog after scripts finish, no general obstacle planner and no vision-based pose estimator. Keep the experiment scope explicit.</p>
+</section>
+
+<section id="checklist">
+<h2>18 · Operator checklist and next step</h2>
+<p>These checkboxes are manual notes for this page only. They do not read or change simulator state, and they reset on reload.</p>
+<ul class="checklist">
+<li><label><input type="checkbox"> I know whether I am continuing the live scene or starting a new baseline.</label></li>
+<li><label><input type="checkbox"> I have only one intended ROS-connected simulator and one motion controller.</label></li>
+<li><label><input type="checkbox"> Demo motion is false; fresh joint feedback and clock are available.</label></li>
+<li><label><input type="checkbox"> I checked current world base/cube/grasp poses, not just old screenshots.</label></li>
+<li><label><input type="checkbox"> The next script's start pose, finger state and cube height match.</label></li>
+<li><label><input type="checkbox"> The relevant isolated test passed; I know it did not execute in my live GUI.</label></li>
+<li><label><input type="checkbox"> I have the correct file in the correct execution environment.</label></li>
+<li><label><input type="checkbox"> I will press Run once, wait for the result, and not overlap another motion.</label></li>
+<li><label><input type="checkbox"> I know where Pause is and will inspect a failure before resuming.</label></li>
+<li><label><input type="checkbox"> I saved the result/screenshot and distinguish test evidence from live evidence.</label></li>
+</ul>
+<div class="callout success"><strong>Current next step at the time this guide was written</strong>If the live scene is still at the verified initial2cm hold, run <a href="../isaac/scripts/lift_panda_cube_higher.py">isaac/scripts/lift_panda_cube_higher.py</a> once in the GUI as described in section11. If you already ran it, do not repeat it—review its result first. A later controlled lowering and release needs a new validated plan.</div>
+<p><a href="#top">Back to the top ↑</a></p>
+</section>
+<footer>ROBOT_VLA · Local operating guide · 19 October 2026<br>No network libraries, telemetry, remote execution, or GPU configuration changes. Source and state may evolve after this snapshot.</footer>
+</main>
+</div>
+<div id="copy-status" role="status" aria-live="polite"></div>
+<script>
+(() => {
+  const status = document.getElementById('copy-status');
+  let statusTimer;
+  const notify = (message) => {
+    status.textContent = message;
+    clearTimeout(statusTimer);
+    statusTimer = setTimeout(() => { status.textContent = ''; }, 3500);
+  };
+  document.querySelectorAll('.command').forEach((block, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy';
+    button.textContent = 'Copy';
+    button.setAttribute('aria-label', `Copy command block ${index + 1}`);
+    button.addEventListener('click', async () => {
+      const text = block.querySelector('pre code').textContent;
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const area = document.createElement('textarea');
+          area.value = text;
+          area.style.position = 'fixed';
+          area.style.opacity = '0';
+          document.body.appendChild(area);
+          area.select();
+          const copied = document.execCommand('copy');
+          area.remove();
+          button.focus();
+          if (!copied) throw new Error('Clipboard unavailable');
+        }
+        notify('Copied. Review the warning and execution location before running.');
+      } catch {
+        notify('Clipboard blocked by this browser. Select the command text and press Ctrl+C.');
+      }
+    });
+    block.querySelector('.command-head').appendChild(button);
+  });
+  document.getElementById('print-guide').addEventListener('click', () => {
+    document.querySelectorAll('details').forEach((item) => { item.open = true; });
+    window.print();
+  });
+})();
+</script>
+</body>
+</html>
