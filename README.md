@@ -1,7 +1,15 @@
 # ROBOT_VLA
 
-Building a **Vision-Language-Action (VLA)** robot from first principles, in
-**NVIDIA Isaac Sim + ROS 2 Jazzy**.
+Franka Panda manipulation **perception and planning** in **NVIDIA Isaac Sim + ROS 2 Jazzy**.
+The long-term goal is a Vision-Language-Action (VLA) policy, but **the VLA model itself is not implemented yet** (`src/vla/` is empty; there is no language input, dataset or training code).
+
+| Area | Status |
+|---|---|
+| Panda/table scene, wrist RGB-D camera over ROS 2 | Implemented (needs a prepared Isaac Sim host) |
+| Official YOLOv9-S CPU inference (pinned source + checksum) | Implemented; offline Docker workflow |
+| Model-specific RGB-D bottle localisation, URDF IK planner | Implemented; unit-tested math helpers |
+| Bottle pick-and-place | **Not validated** (failed its own slip guard in headless trials) |
+| Dataset labelling, model training, VLA policy | Planned |
 
 > Mental model of the whole project: **Body (Isaac Sim), Nerves (ROS 2), Brain (our code → VLA).**
 > See [docs/00_the_basics.md](docs/00_the_basics.md) for the plain-language foundations.
