@@ -38,7 +38,7 @@ p,li,td{overflow-wrap:anywhere}.tag{max-width:100%;white-space:normal}
  <h1>From an empty scene<br>to a verified cube lift.</h1>
  <p>A complete guide to what we built, which files do what, where each command runs, what success looks like, and what to do when something does not match.</p>
  <div class="chips"><span class="chip">Isaac Sim 6.2</span><span class="chip">ROS 2 Jazzy</span><span class="chip">Franka Panda</span><span class="chip">Simulation only</span></div>
- <p class="meta">Project: /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA<br>Written from local source, test reports and reviewed GUI screenshots. This is a dated record—not live telemetry.</p>
+ <p class="meta">Project: <project-root><br>Written from local source, test reports and reviewed GUI screenshots. This is a dated record—not live telemetry.</p>
 </header>
 <div class="stats"><div class="stat"><strong>Grasp confirmed</strong><span>Both fingers contacted the cube in the GUI.</span></div><div class="stat"><strong>1.99 cm lifted</strong><span>Initial live lift confirmed by screenshots.</span></div><div class="stat"><strong>+5 cm tested</strong><span>Isolated test passed; live result not yet supplied.</span></div></div>
 
@@ -106,7 +106,7 @@ p,li,td{overflow-wrap:anywhere}.tag{max-width:100%;white-space:normal}
 <p>Isaac Sim was installed into <code>env_isaacsim</code> using pip and NVIDIA's package index, with the <code>all</code> and <code>extscache</code> extras. The user accepted the NVIDIA EULA. PyTorch with the cu128 build was installed in that venv. <code>trimesh</code> supports asset conversion; SciPy was used for offline IK calculations. ROS was already installed.</p>
 <div class="callout warning"><strong>The working installation already exists.</strong>There is no complete lockfile or tested clean-machine bootstrap in this repository. Do not replace this environment just to run the demo. Driver/CUDA installation commands are intentionally absent. Restoring on another machine needs a separate compatibility and dependency check.</div>
 <h3>Read-only installation checks</h3>
-<div class="command"><div class="command-head"><span>Linux terminal · read-only · no simulator launch</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+<div class="command"><div class="command-head"><span>Linux terminal · read-only · no simulator launch</span></div><pre><code>cd <project-root>
 test -x env_isaacsim/bin/python &amp;&amp; echo "Isaac Python exists"
 test -f /opt/ros/jazzy/setup.bash &amp;&amp; echo "ROS Jazzy exists"
 ./env_isaacsim/bin/python -m pip show isaacsim torch scipy trimesh
@@ -119,7 +119,7 @@ git -C isaac/assets/bullet3 rev-parse HEAD</code></pre></div>
 <li>Provenance: <a href="../configs/simulation_assets.json">configs/simulation_assets.json</a>. This environment is a simple tabletop, not a downloaded warehouse.</li></ul>
 <details><summary>Asset restoration commands — ONLY if the checkout is missing</summary>
 <p>These commands are an explicit restoration recipe, not a command to run over the existing checkout. They download code/assets but do not configure GPUs. Stop if the destination already exists; do not delete it blindly.</p>
-<div class="command"><div class="command-head"><span>Linux terminal · optional download · empty destination only</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+<div class="command"><div class="command-head"><span>Linux terminal · optional download · empty destination only</span></div><pre><code>cd <project-root>
 git clone --filter=blob:none --no-checkout https://github.com/bulletphysics/bullet3.git isaac/assets/bullet3
 git -C isaac/assets/bullet3 sparse-checkout init --cone
 git -C isaac/assets/bullet3 sparse-checkout set examples/pybullet/gym/pybullet_data/franka_panda examples/pybullet/gym/pybullet_data/table
@@ -137,7 +137,7 @@ git -C isaac/assets/bullet3 rev-parse HEAD</code></pre></div>
 <tr><td>C — ROS commands</td><td>Inspect topics, set demo off, run guarded approach commands.</td><td>ROS setup and /usr/bin/python.</td></tr>
 </tbody></table></div>
 <h3>Prepare a ROS command terminal (C)</h3>
-<div class="command"><div class="command-head"><span>Linux terminal C · setup only</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+<div class="command"><div class="command-head"><span>Linux terminal C · setup only</span></div><pre><code>cd <project-root>
 source /opt/ros/jazzy/setup.bash
 source ros2_ws/install/setup.bash
 export ROS_DOMAIN_ID=42
@@ -154,7 +154,7 @@ export RMW_IMPLEMENTATION=rmw_fastrtps_cpp</code></pre></div>
 <section id="startup">
 <h2>06 · Build the package and open the scene</h2>
 <h3>6.1 Build ROS nodes (first use or package-structure changes)</h3>
-<div class="command"><div class="command-head"><span>Linux terminal · build only</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+<div class="command"><div class="command-head"><span>Linux terminal · build only</span></div><pre><code>cd <project-root>
 source /opt/ros/jazzy/setup.bash
 cd ros2_ws
 /usr/bin/colcon build --symlink-install --packages-select vla_sim
@@ -163,19 +163,19 @@ source ros2_ws/install/setup.bash</code></pre></div>
 <p>Expected: a successful <code>vla_sim</code> build. Symlink installation helps source edits take effect, but already-running nodes must still be restarted. Changes to package metadata, entry points or installed resources may require another build.</p>
 <h3>6.2 Generate the saved tabletop scene (only when needed)</h3>
 <div class="callout warning"><strong>Do not rebuild during a live grasp.</strong>This command regenerates assets and overwrites the saved baseline scene; it does not capture the current GUI pose. Keep generated assets intact while a scene references them.</div>
-<div class="command"><div class="command-head"><span>Linux terminal A · generates files · does not populate an existing GUI</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+<div class="command"><div class="command-head"><span>Linux terminal A · generates files · does not populate an existing GUI</span></div><pre><code>cd <project-root>
 source /opt/ros/jazzy/setup.bash
 ROS_DOMAIN_ID=42 RMW_IMPLEMENTATION=rmw_fastrtps_cpp ./env_isaacsim/bin/python isaac/scripts/panda_tabletop.py --headless --build-only</code></pre></div>
 <p>Expected output includes <code>SCENE_SAVED=.../isaac/scenes/panda_tabletop.usda</code> and <code>ARTICULATION_ROOT=/World/panda/Geometry/panda_link0</code>. The importer can create numbered output folders on repeated builds; do not assume the next run always uses <code>panda_3</code>.</p>
 <h3>6.3 Launch Isaac GUI (skip if your existing scene is open)</h3>
-<div class="command"><div class="command-head"><span>Linux terminal A · launch one GUI</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+<div class="command"><div class="command-head"><span>Linux terminal A · launch one GUI</span></div><pre><code>cd <project-root>
 source /opt/ros/jazzy/setup.bash
 export ROS_DOMAIN_ID=42
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 ./env_isaacsim/bin/isaacsim</code></pre></div>
 <ol><li>Wait for Isaac Sim startup to finish.</li><li>Use <strong>File → Open</strong> and select <a href="../isaac/scenes/panda_tabletop.usda">isaac/scenes/panda_tabletop.usda</a>.</li><li>If ROS bridge node types are unavailable, open <strong>Window → Extensions</strong>, search for <code>isaacsim.ros2.bridge</code>, enable it, then reopen the scene before proceeding.</li><li>Select <code>/World/Overview</code> as the viewport camera if desired.</li><li>Press <strong>Play</strong>. Let the cube settle on the table.</li><li>Do not assume this fresh scene matches the historical live scene; read section 07.</li></ol>
 <h3>6.4 Start the monitor and disabled demo commander</h3>
-<div class="command"><div class="command-head"><span>Linux terminal B · keep running · motion off by default</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+<div class="command"><div class="command-head"><span>Linux terminal B · keep running · motion off by default</span></div><pre><code>cd <project-root>
 source /opt/ros/jazzy/setup.bash
 source ros2_ws/install/setup.bash
 export ROS_DOMAIN_ID=42
@@ -211,7 +211,7 @@ timeout 8 ros2 topic info /vla_sim/joint_command --verbose</code></pre></div>
 <div class="command"><div class="command-head"><span>ROS terminal C · stops demo commands only</span></div><pre><code>ros2 param set /vla_sim/joint_commander enable_motion false
 ros2 param get /vla_sim/joint_commander enable_motion</code></pre></div>
 <h3>Base-frame forward kinematics from ROS feedback</h3>
-<div class="command"><div class="command-head"><span>ROS terminal C · read-only FK · not a world/cube measurement</span></div><pre><code>ros2 run vla_sim position_report --urdf /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA/isaac/assets/bullet3/examples/pybullet/gym/pybullet_data/franka_panda/panda.urdf --timeout 10</code></pre></div>
+<div class="command"><div class="command-head"><span>ROS terminal C · read-only FK · not a world/cube measurement</span></div><pre><code>ros2 run vla_sim position_report --urdf <project-root>/isaac/assets/bullet3/examples/pybullet/gym/pybullet_data/franka_panda/panda.urdf --timeout 10</code></pre></div>
 <p>JSON reports <code>frame: panda_link0</code>. These coordinates are relative to the base. Do not compare them directly to the cube's world coordinates without applying the base transform.</p>
 <h3>Actual live world poses inside Isaac</h3>
 <ol><li>In VS Code open <a href="../isaac/scripts/inspect_live_positions.py">isaac/scripts/inspect_live_positions.py</a>.</li><li>Click inside the editor, press <strong>Ctrl+A</strong>, then <strong>Ctrl+C</strong>.</li><li>In Isaac Sim open <strong>Window → Script Editor</strong>. Menu layout may vary; use the window/menu search if necessary.</li><li>Replace the Script Editor's old code with this file's full contents.</li><li>Make sure physics has been started. For this inspector, Play or Pause after Play is acceptable; stopped is not.</li><li>Click <strong>Run</strong> and read the output panel below the editor.</li></ol>
@@ -230,7 +230,7 @@ ros2 param get /vla_sim/joint_commander enable_motion</code></pre></div>
 <p>These are target frame heights, not finger-tip clearance. Gravity and finite drive stiffness caused roughly 4 mm endpoint error. Actual cube-entry grasp height was about 0.0266 m.</p>
 <h3>9.1 Validate the chosen plan in isolation</h3>
 <p><span class="tag test">Separate simulation</span> Run in terminal A or another test terminal from the project root. Run only the plan needed, or all three for a regression check.</p>
-<div class="command"><div class="command-head"><span>Linux test terminal · no ROS commands to the GUI</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+<div class="command"><div class="command-head"><span>Linux test terminal · no ROS commands to the GUI</span></div><pre><code>cd <project-root>
 ./env_isaacsim/bin/python tests/check_panda_approach.py --plan configs/panda_approach.json
 ./env_isaacsim/bin/python tests/check_panda_approach.py --plan configs/panda_descent.json
 ./env_isaacsim/bin/python tests/check_panda_approach.py --plan configs/panda_cube_entry.json</code></pre></div>
@@ -287,17 +287,17 @@ ros2 param get /vla_sim/joint_commander enable_motion</code></pre></div>
 <section id="testing">
 <h2>12 · Tests, outputs and report files</h2>
 <h3>12.1 Unit tests — no robot motion</h3>
-<div class="command"><div class="command-head"><span>Linux terminal · system Python with ROS overlay</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+<div class="command"><div class="command-head"><span>Linux terminal · system Python with ROS overlay</span></div><pre><code>cd <project-root>
 source /opt/ros/jazzy/setup.bash
 source ros2_ws/install/setup.bash
 /usr/bin/python -m pytest ros2_ws/src/vla_sim/test -q</code></pre></div>
 <p>Last recorded result: <strong>18 passed</strong>. Tests cover ordering/limits, smooth motion, kinematics and descent guard bounds. These unit tests do not establish a successful physical grasp.</p>
 <h3>12.2 Runtime world-pose inspector test</h3>
-<div class="command"><div class="command-head"><span>Linux test terminal · isolated scene</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+<div class="command"><div class="command-head"><span>Linux test terminal · isolated scene</span></div><pre><code>cd <project-root>
 ./env_isaacsim/bin/python tests/check_panda_positions.py</code></pre></div>
 <p>This opens the saved baseline, removes the ROS graph and reads live simulated poses. It expects the baseline base near zero and a settled cube. It is not an FK-only test and does not read your existing GUI scene.</p>
 <h3>12.3 Grasp and lift tests</h3>
-<div class="command"><div class="command-head"><span>Linux test terminal · choose one test scope · isolated, no live ROS commands</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+<div class="command"><div class="command-head"><span>Linux test terminal · choose one test scope · isolated, no live ROS commands</span></div><pre><code>cd <project-root>
 # Closure only:
 ./env_isaacsim/bin/python tests/check_panda_grasp.py
 
@@ -309,13 +309,13 @@ source ros2_ws/install/setup.bash
 <p>Choose the scope you need; you do not need all three every time. Expected markers: <code>GRASP_VALIDATION_PASSED</code>, <code>LIFT_VALIDATION_PASSED</code>, <code>HIGHER_LIFT_VALIDATION_PASSED</code>, depending on flags. The same coroutines/entry script used in the GUI are exercised.</p>
 <h3>12.4 ROS round-trip integration test — special caution</h3>
 <div class="callout danger"><strong>Do not run this while the live GUI is connected to domain 42.</strong>This test starts a new simulator, rebuilds the baseline scene and actively publishes demo commands on the same ROS domain. It can move another connected simulation. Close the live simulator and stop the normal ROS launch before running it in an exclusive test session. An external domain environment variable does not isolate it: the script itself selects 42.</div>
-<div class="command"><div class="command-head"><span>Exclusive test session ONLY · actively publishes commands · rebuilds saved scene</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+<div class="command"><div class="command-head"><span>Exclusive test session ONLY · actively publishes commands · rebuilds saved scene</span></div><pre><code>cd <project-root>
 source /opt/ros/jazzy/setup.bash
 source ros2_ws/install/setup.bash
 /usr/bin/python tests/check_panda_ros2.py</code></pre></div>
 <p>Run this file directly, <strong>not as a pytest test</strong>: its entry point is <code>main()</code>. Historical result: 1199 states, 400 commands, 1199 clocks, and 0.300 rad joint-1 movement. Exact counts can vary. Log: <a href="../ros2_ws/log/panda_integration.log">ros2_ws/log/panda_integration.log</a>.</p>
 <h3>12.5 Capture a noisy simulator test log</h3>
-<div class="command"><div class="command-head"><span>Linux test terminal · captures output and preserves failure status</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+<div class="command"><div class="command-head"><span>Linux test terminal · captures output and preserves failure status</span></div><pre><code>cd <project-root>
 ./env_isaacsim/bin/python tests/check_panda_grasp.py --higher &gt; /tmp/robot_vla_higher_lift_check.log 2&gt;&amp;1
 result=$?
 tail -n 95 /tmp/robot_vla_higher_lift_check.log
@@ -399,7 +399,7 @@ tail -n 95 /tmp/robot_vla_higher_lift_check.log
 <ul><li>GUI closure/lift author changes into the USD <strong>session layer</strong>. They leave drive targets active but do not save the stage.</li><li>An ordinary save of the root layer is not a complete runtime checkpoint. It does not automatically capture the session layer, dynamic pose, controller state or grasp history.</li><li>Pause usually preserves the current simulated state. Stop/restart, stage reopen or app exit must be treated as state invalidation; verify again.</li><li>Approach commands are runtime actuator targets. Report JSON and screenshots are evidence, not restartable simulator snapshots.</li></ul>
 <h3>What to back up</h3>
 <p>Preserve source scripts, configs, this guide, the original asset revision/licenses and screenshots. For reproducibility also archive the generated scene <em>with all referenced generated assets</em>, environment/package information and relevant reports. Many of these are ignored by Git.</p>
-<div class="command"><div class="command-head"><span>Linux terminal · read-only Git inventory</span></div><pre><code>cd /home/spyrajessikateam/Music/projects_abbas/ROBOT_VLA
+<div class="command"><div class="command-head"><span>Linux terminal · read-only Git inventory</span></div><pre><code>cd <project-root>
 git status --short
 git check-ignore .vscode/tasks.json env_isaacsim/bin/python isaac/scenes/panda_tabletop.usda ros2_ws/log/panda_higher_lift_validation.json</code></pre></div>
 <p><a href="../.gitignore">.gitignore</a> ignores the venv, assets, USD files, ROS build/install/log folders and <strong>.vscode/</strong>. A successful local run does not mean all required files have been committed. Do not blindly force-add large environments/assets.</p>
