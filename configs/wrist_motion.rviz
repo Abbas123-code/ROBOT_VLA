@@ -1,0 +1,42 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Enabled: true
+  Name: root
+  Value: true
+  Global Options:
+    Background Color: 35; 38; 45
+    Fixed Frame: wrist_camera_optical_frame
+    Frame Rate: 20
+  Displays:
+    - Class: rviz_default_plugins/Image
+      Name: Moving wrist RGB (domain 46)
+      Enabled: true
+      Value: true
+      Topic:
+        Value: /wrist_camera/color/image_raw
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 2
+      Transport Hint: raw
+    - Class: rviz_default_plugins/Image
+      Name: Moving wrist YOLO boxes (domain 46)
+      Enabled: true
+      Value: true
+      Topic:
+        Value: /wrist_camera/detections/image
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 2
+      Transport Hint: raw
+Window Geometry:
+  Hide Left Dock: false
+  Hide Right Dock: false
+  Width: 1400
+  Height: 900
+  X: 50
+  Y: 50

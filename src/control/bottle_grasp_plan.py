@@ -81,3 +81,18 @@ def body_orientation(target_xy, tilt_degrees=60, roll_sign=1):
     forward = radial * np.sin(theta) - np.array([0., 0., np.cos(theta)])
     closing = roll_sign * np.cross([0., 0., 1.], radial)
     return np.column_stack((np.cross(closing, forward), closing, forward))
+
+
+def clearance_body_grasp(target_xy):
+    """Experimental pose from mesh-clearance and full-route IK checks.
+
+    Fixed 5 mm radial approach offset is geometry, not a correction from USD.
+    Keep the same orientation while carrying to avoid rotating the bottle.
+    This function does not approve contact or certify a physical grasp.
+    """
+    xy = np.asarray(target_xy, dtype=float)
+    if xy.shape != (2,) or not np.isfinite(xy).all() or np.linalg.norm(xy) < .1:
+        raise ValueError("Finite nonzero bottle XY required")
+    point = np.r_[xy - .005 * xy / np.linalg.norm(xy), .143]
+    rotation = Rotation.from_euler("z", 20, degrees=True).as_matrix() @ body_orientation(xy, 60, -1)
+    return point, rotation

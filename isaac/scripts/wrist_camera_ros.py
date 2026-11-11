@@ -21,7 +21,7 @@ OPTICAL = "wrist_camera_optical_frame"
 PREFIX = "/wrist_camera"
 
 
-def run(app, validate):
+def run(app, validate, test_play=False):
     import carb
     import numpy as np
     import omni.replicator.core as rep
@@ -49,6 +49,7 @@ def run(app, validate):
     stage.SetEditTarget(stage.GetSessionLayer())
     timeline = omni.timeline.get_timeline_interface()
     timeline.stop()
+    timeline.set_auto_update(False)
     stage.GetPrimAtPath("/World/ROS2").SetActive(False)
     hands = [prim for prim in stage.Traverse() if prim.GetName() == "panda_hand"]
     if len(hands) != 1:
@@ -121,12 +122,30 @@ def run(app, validate):
     count = 0
     attempts = 0
     last_publish = 0.0
+    # A director causes state-changing requests from other sources to be
+    # ignored. Unlike reacting to PLAY after the event, this prevents physics
+    # initialization itself from changing the frozen robot pose.
+    preview_director = omni.timeline.get_timeline_interface("wrist_preview_locked")
+    preview_director.stop()
+    preview_director.set_auto_update(False)
+    preview_director.commit()
+    timeline.set_director(preview_director)
+    timeline.commit()
+    play_attempts_tested = 0
+    fault = False
     try:
         print(f"WRIST_CAMERA_CAPTURE_START: {camera_path}, eye={eye}", flush=True)
         while app.is_running():
             if timeline.is_playing():
                 timeline.pause()
-                raise RuntimeError("Preview must stay paused; no physics playback is authorized here")
+                timeline.commit()
+                print("WRIST_PREVIEW_PAUSED: Play is disabled in the camera-only preview", flush=True)
+            if fault:
+                # Do not publish possibly stale calibration or silently reset
+                # object positions. Keep the GUI open for inspection/restart.
+                app.update()
+                rclpy.spin_once(node, timeout_sec=0.0)
+                continue
             if not validate and time.monotonic() - last_publish < 0.2:
                 app.update()
                 rclpy.spin_once(node, timeout_sec=0.0)
@@ -155,6 +174,13 @@ def run(app, validate):
             cache = UsdGeom.XformCache()
             current_hand = cache.GetLocalToWorldTransform(hand)
             current_camera = cache.GetLocalToWorldTransform(camera.GetPrim())
+            if not Gf.IsClose(current_hand, hand_world, 1e-8) or abs(timeline.get_current_time()) > 1e-8:
+                timeline.pause()
+                if validate:
+                    raise RuntimeError("Frozen wrist pose or simulation time changed")
+                print("WRIST_PREVIEW_FAULT: state changed; images stopped safely. Restart this preview; window stays open.", flush=True)
+                fault = True
+                continue
             optical_local = optical_flip * current_camera * current_hand.GetInverse()
             focal = float(camera.GetFocalLengthAttr().Get())
             horizontal = float(camera.GetHorizontalApertureAttr().Get())
@@ -169,13 +195,18 @@ def run(app, validate):
             depth_pub.publish(image(z, "32FC1", stamp))
             info_pub.publish(info)
             depth_info_pub.publish(info)
-            if not Gf.IsClose(current_hand, hand_world, 1e-8) or abs(timeline.get_current_time()) > 1e-8:
-                raise RuntimeError("Frozen wrist pose or simulation time changed")
             tf.sendTransform([transform("world", "panda_hand", current_hand, stamp),
                               transform("panda_hand", OPTICAL, optical_local, stamp)])
             rclpy.spin_once(node, timeout_sec=0.0)
             last_publish = time.monotonic()
             count += 1
+            if test_play and count == 2:
+                timeline.play()
+                app.update()
+                play_attempts_tested += 1
+                if timeline.is_playing() or abs(timeline.get_current_time()) > 1e-8:
+                    raise RuntimeError(f"Play lock regression failed: playing={timeline.is_playing()}, time={timeline.get_current_time()}")
+                print("WRIST_PREVIEW_PLAY_TEST_PASSED", flush=True)
             if count == 5:
                 from PIL import Image as PillowImage
                 REPORTS.mkdir(parents=True, exist_ok=True)
@@ -189,7 +220,8 @@ def run(app, validate):
                           "depth_range_m": [float(z[valid].min()), float(z[valid].max())],
                           "camera_world_position": list(eye), "fx": fx,
                           "source_layers_unchanged": unchanged, "simulation_time": timeline.get_current_time(),
-                          "robot_motion": False, "mode": "validation" if validate else "live_preview"}
+                          "robot_motion": False, "playback_locked": True, "play_attempts_tested": play_attempts_tested,
+                          "mode": "validation" if validate else "live_preview"}
                 name = "wrist_camera_validation.json" if validate else "wrist_camera_preview.json"
                 (REPORTS / name).write_text(json.dumps(report, indent=2) + "\n")
                 print("WRIST_CAMERA_VALIDATED" if validate else "WRIST_CAMERA_READY: RGB + depth + CameraInfo + TF, domain 44, no motion", flush=True)
@@ -198,6 +230,7 @@ def run(app, validate):
         if count < 5:
             raise RuntimeError(f"Camera stopped before validation: {count} valid frames, {attempts} attempts")
     finally:
+        timeline.set_director(None)
         timeline.pause()
         rgb.detach(product)
         depth.detach(product)
@@ -209,7 +242,10 @@ def run(app, validate):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--validate", action="store_true")
+    parser.add_argument("--test-play", action="store_true", help="Regression-test the Play interlock during validation")
     args = parser.parse_args()
+    if args.test_play and not args.validate:
+        parser.error("--test-play requires --validate")
     os.environ["ROS_DOMAIN_ID"] = "44"
     os.environ["RMW_IMPLEMENTATION"] = "rmw_fastrtps_cpp"
     REPORTS.mkdir(parents=True, exist_ok=True)
@@ -218,7 +254,7 @@ def main():
         from isaacsim import SimulationApp
         app = SimulationApp({"headless": args.validate})
         try:
-            run(app, args.validate)
+            run(app, args.validate, args.test_play)
         except BaseException:
             traceback.print_exc()
             print("WRIST_CAMERA_FAILED", flush=True)

@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/WongKinYiu/yolov9",
+  "revision": "5b1ea9a8b3f0ffe4fe0e203ec6232d788bb3fcff",
+  "weights": "outputs/training/tabletop_yolov9s_v1/weights/best.pt",
+  "weights_sha256": "28db4ee45eb19eb6d44d7cb9bcc8d0c13b8a4fda95f57dcd89dd508ef9910841",
+  "names": ["Blue Tray", "Red Block", "Black Block", "Green Block", "Yellow Bar", "Orange Can", "Water Bottle"],
+  "confidence_threshold": 0.5,
+  "iou_threshold": 0.45,
+  "image_size": 640,
+  "device": "cpu",
+  "scope": "Custom dual-head YOLOv9-S, same-scene simulation only; not motion approval"
+}

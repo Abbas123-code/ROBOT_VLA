@@ -1,5 +1,11 @@
 # Panda wrist RGB-D camera
 
+> Current workflow: the frozen preview now locks playback; a separate trained
+> seven-class detector publishes overlays. Moving RGB video and a successful
+> visible bottle-placement validation are documented in
+> [trained wrist detection](trained_wrist_detection.md). The moving stream is
+> RGB-only, not an extension of this preview's synchronized RGB-D contract.
+
 The [publisher](../isaac/scripts/wrist_camera_ros.py) adds a virtual camera under
 the Panda `panda_hand` prim in the **session layer** of the cluttered scene.
 No saved scene is overwritten. The existing remote Orbbec asset is preserved;
@@ -51,14 +57,16 @@ The viewport can edit the sensor's pose. The publisher now reads its current
 pose and intrinsics each capture, rather than continuing to publish startup
 values after viewport navigation. Keep the camera still when collecting a
 manipulation snapshot. See [bottle detection](bottle_detection.md) for the
-working RGB-D subscriber and the aborted, unvalidated bottle-grasp experiment.
+historical RGB-D subscriber experiments and [trained wrist detection](trained_wrist_detection.md)
+for the later successful guarded bottle-validation result.
 
 ## Safety and limitations
 
 - Physics time stays at zero. No Play, joint commands, grasping or pick-place.
-- Do not press Play in this preview; the script stops on unexpected playback.
-- This publisher performs no recognition itself. A separate model-specific
-	RGB-D bottle detector now works; bottle grasping is **not validated**.
+- Leave this preview frozen; its dedicated timeline locks accidental playback.
+- This publisher performs no recognition itself. The separate trained detector
+	supplies boxes and model-specific RGB-D target estimates. A successful bottle
+	validation in a different physics scene does not authorize preview motion.
 - This does not validate paths around clutter or a physical mounting bracket.
 - No driver, system CUDA or GPU setting changes were made.
 

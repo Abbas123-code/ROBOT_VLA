@@ -7,6 +7,7 @@ venv/
 env/
 env_isaacsim/
 env_yolov9_cpu/
+env_yolov9_train/
 third_party/yolov9/
 .ipynb_checkpoints/
 

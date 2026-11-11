@@ -1,0 +1,7 @@
+# Separate env_yolov9_train only. Do not install into Isaac or CPU inference.
+# Install torch==2.7.1+cu128 and torchvision==0.22.1+cu128 from the official
+# https://download.pytorch.org/whl/cu128 index first (supports Blackwell).
+-r requirements-yolov9-cpu.txt
+tensorboard==2.19.0
+thop==0.1.1.post2209072238
+Pillow==10.4.0
